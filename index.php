@@ -1,13 +1,23 @@
+<?php
+require_once 'includes/init.php';
+
+// Get featured products from database
+try {
+    $featuredProducts = $produkModel->getFeatured(8);
+} catch (Exception $e) {
+    $featuredProducts = [];
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="#">
+	<meta name="description" content="Turen Indah Bangunan - Toko Beton Terlengkap di Malang">
 
 	<!-- title -->
-	<title>Turen Indah Bangunan</title>
+	<title>Turen Indah Bangunan - Toko Beton Terlengkap di Malang</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/image1-min.png">
@@ -50,7 +60,7 @@
 					<div class="main-menu-wrap">
 						<!-- logo -->
 						<div class="site-logo">
-							<a href="index.html">
+							<a href="<?= BASE_URL ?>admin/login.php">
 								<img src="assets/img/logo1.png" alt="Logo" style="max-height: 70px; height: auto; width: auto;">
 							</a>
 						</div>
@@ -60,23 +70,25 @@
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li class="current-list-item"><a href="index.html">Home</a>
+								<li class="current-list-item"><a href="index.php">Home</a>
 									<ul class="sub-menu">
-										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
+										<li><a href="index.php">Static Home</a></li>
+										<li><a href="index2.php">Slider Home</a></li>
 									</ul>
 								</li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="news.html">News</a>
 									<ul class="sub-menu">
+										<li><a href="news.html">News</a></li>
+										<li><a href="single-news.html">Single News</a></li>
 									</ul>
 								</li>
 								<li><a href="contact.html">Contact</a></li>
-								<li><a href="shop.html">Shop</a>
+								<li><a href="shop.php">Shop</a>
 									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
+										<li><a href="shop.php">Shop</a></li>
 										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="single-product.html">Single Product</a></li>
+										<li><a href="single-product.php">Single Product</a></li>
 										<li><a href="cart.html">Cart</a></li>
 									</ul>
 								</li>
@@ -107,8 +119,10 @@
 					<div class="search-bar">
 						<div class="search-bar-tablecell">
 							<h3>Search For:</h3>
-							<input type="text" placeholder="Keywords">
-							<button type="submit">Search <i class="fas fa-search"></i></button>
+							<form action="shop.php" method="GET">
+								<input type="text" name="search" placeholder="Cari produk beton...">
+								<button type="submit">Search <i class="fas fa-search"></i></button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -128,8 +142,8 @@
 							<h1>MULAI KONSTRUKSI ANDA DENGAN BETON BERKUALITAS</h1>
 							<h3>Industri Material Bangunan dan Beton berkualitas tinggi dan terpercaya siap untuk berbagai kebutuhan konstruksi</h3>
 							<div class="hero-btns">
-								<a href="shop.html" class="boxed-btn">Produk Kami</a>
-								<a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Saya+mendapat+informasi+dari+Wabsite%2C+ingin+lebih+tahu+tentang+informasi+harga+Produk+Yang+ada+di+Turen+Indah+Bangunan&type=phone_number&app_absent=0" class="bordered-btn">Kontak Kami</a>
+								<a href="shop.php" class="boxed-btn">Lihat Produk</a>
+								<a href="contact.html" class="bordered-btn">Hubungi Kami</a>
 							</div>
 						</div>
 					</div>
@@ -195,93 +209,89 @@
             </div>
         </div>
 
-        <!-- Produk Baris 1 -->
-        <div class="row">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+        <?php if (!empty($featuredProducts)): ?>
+            <!-- Produk dari Database -->
+            <div class="row">
+                <?php foreach (array_slice($featuredProducts, 0, 4) as $produk): ?>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="single-product-item">
+                            <div class="product-image">
+                                <a href="single-product.php?id=<?= $produk['id'] ?>">
+                                    <?php if ($produk['gambar_utama']): ?>
+                                        <img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
+                                             alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                    <?php else: ?>
+                                        <img src="assets/img/products/default-product.jpg" 
+                                             alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                    <?php endif; ?>
+                                </a>
+                            </div>
+                            <h3><?= htmlspecialchars($produk['nama_produk']) ?></h3>
+                            <p class="product-price">
+                                <span>Per <?= ucfirst($produk['satuan']) ?></span> 
+                                <?php if ($produk['harga'] > 0): ?>
+                                    <?= formatRupiah($produk['harga']) ?>
+                                <?php else: ?>
+                                    <span class="text-info">Hubungi Kami</span>
+                                <?php endif; ?>
+                            </p>
+                            <a href="single-product.php?id=<?= $produk['id'] ?>" class="cart-btn">
+                                <i class="fas fa-eye"></i> Lihat Detail
+                            </a>
+                        </div>
                     </div>
-                    <h3>Strawberry</h3>
-                    <p class="product-price"><span>Per Kg</span> 85$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
+                <?php endforeach; ?>
             </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
-                    </div>
-                    <h3>Berry</h3>
-                    <p class="product-price"><span>Per Kg</span> 70$</p>
-                   <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
-                    </div>
-                    <h3>Lemon</h3>
-                    <p class="product-price"><span>Per Kg</span> 35$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-4.jpg" alt=""></a>
-                    </div>
-                    <h3>Apple</h3>
-                    <p class="product-price"><span>Per Kg</span> 50$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-        </div>
 
-        <!-- Produk Baris 2 -->
-        <div class="row mt-4">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href=""><img src="assets/img/products/product-img-5.jpg" alt=""></a>
-                    </div>
-                    <h3>Banana</h3>
-                    <p class="product-price"><span>Per Kg</span> 25$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            <?php if (count($featuredProducts) > 4): ?>
+                <!-- Produk Baris 2 -->
+                <div class="row mt-4">
+                    <?php foreach (array_slice($featuredProducts, 4, 4) as $produk): ?>
+                        <div class="col-lg-3 col-md-6 text-center">
+                            <div class="single-product-item">
+                                <div class="product-image">
+                                    <a href="single-product.php?id=<?= $produk['id'] ?>">
+                                        <?php if ($produk['gambar_utama']): ?>
+                                            <img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
+                                                 alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                        <?php else: ?>
+                                            <img src="assets/img/products/default-product.jpg" 
+                                                 alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
+                                <h3><?= htmlspecialchars($produk['nama_produk']) ?></h3>
+                                <p class="product-price">
+                                    <span>Per <?= ucfirst($produk['satuan']) ?></span> 
+                                    <?php if ($produk['harga'] > 0): ?>
+                                        <?= formatRupiah($produk['harga']) ?>
+                                    <?php else: ?>
+                                        <span class="text-info">Hubungi Kami</span>
+                                    <?php endif; ?>
+                                </p>
+                                <a href="single-product.php?id=<?= $produk['id'] ?>" class="cart-btn">
+                                    <i class="fas fa-eye"></i> Lihat Detail
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="shop.php" class="boxed-btn">Lihat Semua Produk</a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-6.jpg" alt=""></a>
-                    </div>
-                    <h3>Pineapple</h3>
-                    <p class="product-price"><span>Per Kg</span> 40$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+        <?php else: ?>
+            <!-- Fallback jika tidak ada produk -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="text-muted">Produk sedang dalam proses update. Silakan hubungi kami untuk informasi lebih lanjut.</p>
+                    <a href="contact.html" class="boxed-btn">Hubungi Kami</a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-7.jpg" alt=""></a>
-                    </div>
-                    <h3>Watermelon</h3>
-                    <p class="product-price"><span>Per Kg</span> 60$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-8.jpg" alt=""></a>
-                    </div>
-                    <h3>Orange</h3>
-                    <p class="product-price"><span>Per Kg</span> 45$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -297,7 +307,7 @@
                     	<div class="price-box">
                         	<div class="inner-price">
                                 <span class="price">
-                                    <strong>30%</strong> <br> Khusus untuk Anda
+                                    <strong>30%</strong> <br> diskon
                                 </span>
                             </div>
                         </div>
@@ -306,13 +316,14 @@
                 </div>
                 <!--Content Column-->
                 <div class="content-column col-lg-6">
-					<h3><span class="orange-text">Promo</span> Bulan Ini</h3>Diskon 30% 
-                    <h4>Kubah Beton Berkualitas</h4>
-                    <div class="text"> Dapatkan kubah beton kuat dan tahan cuaca untuk kebutuhan masjid dan bangunan publik.
-          Material sesuai standar mutu—pengerjaan rapi, siap kirim ke lokasi proyek Anda.</div>
+					<h3><span class="orange-text">Promo</span> Bulan Ini</h3>
+                    <h4>Beton Ready Mix Berkualitas</h4>
+                    <div class="text">Dapatkan diskon spesial untuk pemesanan beton ready mix dalam jumlah besar. Kualitas terjamin sesuai standar SNI, siap kirim ke lokasi proyek Anda.</div>
                     <!--Countdown Timer-->
-                    <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2025/12/29"><div class="counter-column"><div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div>
-                	<a href="cart.html" class="cart-btn mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2025/12/31"><div class="counter-column"><div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div>
+                	<a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Halo%2C%20saya%20tertarik%20dengan%20promo%20beton%20ready%20mix%20dari%20Turen%20Indah%20Bangunan" class="cart-btn mt-3" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Hubungi Sekarang
+                    </a>
                 </div>
             </div>
         </div>
@@ -330,9 +341,10 @@
 								<img src="assets/img/avaters/avatar1.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Lukman Hakim <span>Kontraktor Bangunan – PT Karya Sejahtera</span></h3>
+								<h3>Budi Santoso <span>Kontraktor</span></h3>
 								<p class="testimonial-body">
-								"Beton dari perusahaan ini benar-benar berkualitas. Proyek gedung bertingkat kami selesai tepat waktu berkat pengiriman yang selalu tepat dan mutu beton yang terjamin."								</p>
+									"Kualitas beton dari Turen Indah Bangunan sangat memuaskan. Pengiriman selalu tepat waktu dan sesuai spesifikasi proyek. Sangat recommended untuk kebutuhan konstruksi."
+								</p>
 								<div class="last-icon">
 									<i class="fas fa-quote-right"></i>
 								</div>
@@ -343,9 +355,9 @@
 								<img src="assets/img/avaters/avatar2.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Dani Salman <span>Pemilik Rumah</span></h3>
+								<h3>Sari Dewi <span>Developer</span></h3>
 								<p class="testimonial-body">
-									"Saya memesan kusen dan wastafel beton untuk rumah saya. Desainnya rapi, kuat, dan sesuai pesanan. Harganya juga bersaing dengan kualitas premium."
+									"Pelayanan yang sangat profesional dan produk berkualitas tinggi. Tim Turen Indah Bangunan selalu siap membantu dan memberikan solusi terbaik untuk proyek kami."
 								</p>
 								<div class="last-icon">
 									<i class="fas fa-quote-right"></i>
@@ -357,9 +369,9 @@
 								<img src="assets/img/avaters/avatar3.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Rocky Maksim <span>CV Desain Konstruksi</span></h3>
+								<h3>Ahmad Rizki <span>Arsitek</span></h3>
 								<p class="testimonial-body">
-									"Produk molding dan kubah beton yang mereka hasilkan presisi dan sesuai gambar desain saya. Sangat direkomendasikan untuk proyek-proyek yang memerlukan detail tinggi."
+									"Harga kompetitif dengan kualitas yang tidak diragukan lagi. Turen Indah Bangunan adalah partner terpercaya untuk semua kebutuhan material konstruksi."
 								</p>
 								<div class="last-icon">
 									<i class="fas fa-quote-right"></i>
@@ -384,11 +396,11 @@
 				</div>
 				<div class="col-lg-6 col-md-12">
 					<div class="abt-text">
-						<p class="top-sub">Since Year 1999</p>
-						<h2>Kita Adalah <span class="orange-text">Turen Indah Bangunan</span></h2>
-						<p>Etiam vulputate ut augue vel sodales. In sollicitudin neque et massa porttitor vestibulum ac vel nisi. Vestibulum placerat eget dolor sit amet posuere. In ut dolor aliquet, aliquet sapien sed, interdum velit. Nam eu molestie lorem.</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente facilis illo repellat veritatis minus, et labore minima mollitia qui ducimus.</p>
-						<a href="about.html" class="boxed-btn mt-4">know more</a>
+						<p class="top-sub">Sejak Tahun 1999</p>
+						<h2>Kami Adalah <span class="orange-text">Turen Indah Bangunan</span></h2>
+						<p>Sebagai perusahaan yang bergerak di bidang material bangunan dan beton, kami telah melayani ribuan proyek konstruksi di wilayah Malang dan sekitarnya dengan komitmen tinggi terhadap kualitas dan kepuasan pelanggan.</p>
+						<p>Dengan pengalaman puluhan tahun, kami memahami kebutuhan konstruksi modern dan menyediakan solusi material terbaik untuk setiap jenis proyek.</p>
+						<a href="about.html" class="boxed-btn mt-4">Selengkapnya</a>
 					</div>
 				</div>
 			</div>
@@ -399,9 +411,9 @@
 	<!-- shop banner -->
 	<section class="shop-banner">
     	<div class="container">
-        	<h3>December sale is on! <br> with big <span style="color: blue;">Discount...</span></h3>
-            <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
-            <a href="shop.html" class="cart-btn btn-lg">Shop Now</a>
+        	<h3>Promo Akhir Tahun! <br> dengan <span class="orange-text">Diskon Besar...</span></h3>
+            <div class="sale-percent"><span>Diskon! <br> Hingga</span>25% <span>off</span></div>
+            <a href="shop.php" class="cart-btn btn-lg">Belanja Sekarang</a>
         </div>
     </section>
 	<!-- end shop banner -->
@@ -413,8 +425,8 @@
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="section-title">	
-						<h3><span class="orange-text">Our</span> News</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+						<h3><span class="orange-text">Berita</span> Terbaru</h3>
+						<p>Informasi terkini seputar konstruksi, tips bangunan, dan update produk dari Turen Indah Bangunan</p>
 					</div>
 				</div>
 			</div>
@@ -424,13 +436,13 @@
 					<div class="single-latest-news">
 						<a href="single-news.html"><div class="latest-news-bg news-bg-1"></div></a>
 						<div class="news-text-box">
-							<h3><a href="single-news.html">You will vainly look for fruit on it in autumn.</a></h3>
+							<h3><a href="single-news.html">Tips Memilih Beton Ready Mix yang Berkualitas</a></h3>
 							<p class="blog-meta">
 								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
+								<span class="date"><i class="fas fa-calendar"></i> 15 Agustus, 2025</span>
 							</p>
-							<p class="excerpt">Vivamus lacus enim, pulvinar vel nulla sed, scelerisque rhoncus nisi. Praesent vitae mattis nunc, egestas viverra eros.</p>
-							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+							<p class="excerpt">Panduan lengkap memilih beton ready mix yang sesuai dengan kebutuhan proyek konstruksi Anda.</p>
+							<a href="single-news.html" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -438,13 +450,13 @@
 					<div class="single-latest-news">
 						<a href="single-news.html"><div class="latest-news-bg news-bg-2"></div></a>
 						<div class="news-text-box">
-							<h3><a href="single-news.html">A man's worth has its season, like tomato.</a></h3>
+							<h3><a href="single-news.html">Inovasi Terbaru dalam Industri Beton Precast</a></h3>
 							<p class="blog-meta">
 								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
+								<span class="date"><i class="fas fa-calendar"></i> 10 Agustus, 2025</span>
 							</p>
-							<p class="excerpt">Vivamus lacus enim, pulvinar vel nulla sed, scelerisque rhoncus nisi. Praesent vitae mattis nunc, egestas viverra eros.</p>
-							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+							<p class="excerpt">Mengenal teknologi terbaru dalam produksi beton precast yang lebih efisien dan berkualitas.</p>
+							<a href="single-news.html" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -452,20 +464,20 @@
 					<div class="single-latest-news">
 						<a href="single-news.html"><div class="latest-news-bg news-bg-3"></div></a>
 						<div class="news-text-box">
-							<h3><a href="single-news.html">Good thoughts bear good fresh juicy fruit.</a></h3>
+							<h3><a href="single-news.html">Standar Kualitas Beton SNI untuk Konstruksi</a></h3>
 							<p class="blog-meta">
 								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
+								<span class="date"><i class="fas fa-calendar"></i> 5 Agustus, 2025</span>
 							</p>
-							<p class="excerpt">Vivamus lacus enim, pulvinar vel nulla sed, scelerisque rhoncus nisi. Praesent vitae mattis nunc, egestas viverra eros.</p>
-							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+							<p class="excerpt">Memahami standar kualitas beton menurut SNI dan pentingnya dalam konstruksi bangunan.</p>
+							<a href="single-news.html" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<a href="news.html" class="boxed-btn">More News</a>
+					<a href="news.html" class="boxed-btn">Berita Lainnya</a>
 				</div>
 			</div>
 		</div>
@@ -507,28 +519,37 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box about-widget">
 						<h2 class="widget-title">About us</h2>
-						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+						<p>Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box get-in-touch">
 						<h2 class="widget-title">Get in Touch</h2>
 						<ul>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/6" onclick="showInstagram()">@turenindah.bangunan</a></li>
+							<li><a href="https://www.instagram.com/turenindah.bangunan/">@turenindah.bangunan</a></li>
 							<li><a href="mailto:info@turenindahbangunan.com">info@turenindahbangunan.com</a></li>
-							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Saya+mendapat+informasi+dari+Wabsite%2C+ingin+lebih+tahu+tentang+informasi+harga+Produk+Yang+ada+di+Turen+Indah+Bangunan&type=phone_number&app_absent=0" onclick="showPhone()">+62 812-5246-2983</a></li>
+							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983">+62 812-5246-2983</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
-
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="shop.php">Shop</a></li>
+							<li><a href="news.html">News</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box subscribe">
 						<h2 class="widget-title">Subscribe</h2>
 						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.html">
-							<input type="email" placeholder="Email">
+						<form action="index.php" method="POST">
+							<input type="email" name="email" placeholder="Email" required>
 							<button type="submit"><i class="fas fa-paper-plane"></i></button>
 						</form>
 					</div>
@@ -543,8 +564,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-12">
-					<p>Copyrights &copy; 2019 - <a href="">Im sama</a>,  All Rights Reserved.<br>
-						Distributed By - <a href="">Thelord</a>
+					<p>&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br>
+						Distributed By - <a href="#">Thelord</a>
 					</p>
 				</div>
 				<div class="col-lg-6 text-right col-md-12">
@@ -552,7 +573,7 @@
 						<ul>
 							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
 						</ul>
@@ -583,41 +604,6 @@
 	<script src="assets/js/sticker.js"></script>
 	<!-- main js -->
 	<script src="assets/js/main.js"></script>
-
-<!-- Tambahkan ini ke bagian bawah sebelum </body> di index.html -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cartButtons = document.querySelectorAll('.add-to-cart');
-
-    cartButtons.forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const name = this.getAttribute('data-name');
-            const price = parseFloat(this.getAttribute('data-price'));
-            const image = this.getAttribute('data-image');
-
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    name: name,
-                    price: price,
-                    image: image,
-                    quantity: 1
-                });
-            }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`${name} telah ditambahkan ke keranjang!`);
-        });
-    });
-});
-</script>
-
 
 </body>
 </html>

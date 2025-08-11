@@ -14,5 +14,6 @@ if (ini_get("session.use_cookies")) {
 }
 
 // Redirect to login
-redirect(ADMIN_URL . 'login.php');
+$loginUrl = BASE_URL;
+redirect($loginUrl);
 ?>

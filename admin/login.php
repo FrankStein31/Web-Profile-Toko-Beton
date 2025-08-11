@@ -3,7 +3,7 @@ require_once '../includes/init.php';
 
 // Jika sudah login, redirect ke dashboard
 if (isLoggedIn()) {
-    redirect(ADMIN_URL . 'dashboard.php');
+    redirect('dashboard.php');
 }
 
 $error = '';
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['admin_level'] = $admin['level'];
             
             setFlashMessage('success', 'Login berhasil! Selamat datang ' . $admin['nama_lengkap']);
-            redirect(ADMIN_URL . 'dashboard.php');
+            redirect('dashboard.php');
         } else {
             $error = 'Username atau password salah';
         }
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         <div class="text-center mt-4">
                             <small class="text-muted">
-                                Default: admin / admin123
+                                Default: admin / 12345678
                             </small>
                         </div>
                     </div>

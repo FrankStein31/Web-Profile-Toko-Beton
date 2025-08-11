@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $kategoriModel->create($data);
             setFlashMessage('success', 'Kategori berhasil ditambahkan');
-            redirect(ADMIN_URL . 'kategori.php');
+            redirect('kategori.php');
             
         } elseif ($action === 'edit' && $id) {
             $kategori = $kategoriModel->getById($id);
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $kategoriModel->update($id, $data);
             setFlashMessage('success', 'Kategori berhasil diupdate');
-            redirect(ADMIN_URL . 'kategori.php');
+            redirect('kategori.php');
         }
     } catch (Exception $e) {
         setFlashMessage('error', $e->getMessage());
@@ -71,7 +71,7 @@ if ($action === 'delete' && $id) {
     } catch (Exception $e) {
         setFlashMessage('error', $e->getMessage());
     }
-    redirect(ADMIN_URL . 'kategori.php');
+    redirect('kategori.php');
 }
 
 // Handle status toggle
@@ -86,7 +86,7 @@ if ($action === 'toggle_status' && $id) {
     } catch (Exception $e) {
         setFlashMessage('error', $e->getMessage());
     }
-    redirect(ADMIN_URL . 'kategori.php');
+    redirect('kategori.php');
 }
 
 // Get data for forms
@@ -94,7 +94,7 @@ if ($action === 'edit' && $id) {
     $kategori = $kategoriModel->getById($id);
     if (!$kategori) {
         setFlashMessage('error', 'Kategori tidak ditemukan');
-        redirect(ADMIN_URL . 'kategori.php');
+        redirect('kategori.php');
     }
 }
 
