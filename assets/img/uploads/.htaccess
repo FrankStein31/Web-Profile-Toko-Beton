@@ -1,0 +1,11 @@
+# Prevent direct access to uploaded files
+<Files ~ "\.(php|pl|py|jsp|asp|sh|cgi)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Allow only image files
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
