@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $produkModel->create($data);
             setFlashMessage('success', 'Produk berhasil ditambahkan');
-            redirect(ADMIN_URL . 'produk.php');
+            redirect('produk.php');
             
         } elseif ($action === 'edit' && $id) {
             $produk = $produkModel->getById($id);
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $produkModel->update($id, $data);
             setFlashMessage('success', 'Produk berhasil diupdate');
-            redirect(ADMIN_URL . 'produk.php');
+            redirect('produk.php');
         }
     } catch (Exception $e) {
         setFlashMessage('error', $e->getMessage());
@@ -84,7 +84,7 @@ if ($action === 'delete' && $id) {
     } catch (Exception $e) {
         setFlashMessage('error', $e->getMessage());
     }
-    redirect(ADMIN_URL . 'produk.php');
+    redirect('produk.php');
 }
 
 // Handle status toggle
@@ -99,7 +99,7 @@ if ($action === 'toggle_status' && $id) {
     } catch (Exception $e) {
         setFlashMessage('error', $e->getMessage());
     }
-    redirect(ADMIN_URL . 'produk.php');
+    redirect('produk.php');
 }
 
 // Get data for forms
@@ -109,7 +109,7 @@ if ($action === 'edit' && $id) {
     $produk = $produkModel->getById($id);
     if (!$produk) {
         setFlashMessage('error', 'Produk tidak ditemukan');
-        redirect(ADMIN_URL . 'produk.php');
+        redirect('produk.php');
     }
 }
 

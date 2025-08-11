@@ -237,10 +237,10 @@ try {
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li><a href="index.html">Home</a>
+								<li><a href="index.php">Home</a>
 									<ul class="sub-menu">
-										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
+										<li><a href="index.php">Static Home</a></li>
+										<li><a href="index2.php">Slider Home</a></li>
 									</ul>
 								</li>
 								<li><a href="about.html">About</a></li>

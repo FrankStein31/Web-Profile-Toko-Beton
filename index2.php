@@ -1,3 +1,6 @@
+<?php
+require_once 'includes/init.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +53,7 @@
 					<div class="main-menu-wrap">
 						<!-- logo -->
 						<div class="site-logo">
-							<a href="index.html">
+							<a href="<?= BASE_URL ?>admin/login.php">
 								<img src="assets/img/logo1.png" alt="Logo" style="max-height: 70px; height: auto; width: auto;">
 							</a>
 						</div>
@@ -59,10 +62,10 @@
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li class="current-list-item"><a href="index.html">Home</a>
+								<li class="current-list-item"><a href="index.php">Home</a>
 									<ul class="sub-menu">
-										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
+										<li><a href="index.php">Static Home</a></li>
+										<li><a href="index2.php">Slider Home</a></li>
 									</ul>
 								</li>
 								<li><a href="about.html">About</a></li>
@@ -74,11 +77,11 @@
 									</ul>
 								</li>
 								<li><a href="contact.html">Contact</a></li>
-								<li><a href="shop.html">Shop</a>
+								<li><a href="shop.php">Shop</a>
 									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
+										<li><a href="shop.php">Shop</a></li>
 										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="single-product.html">Single Product</a></li>
+										<li><a href="single-product.php">Single Product</a></li>
 										<li><a href="cart.html">Cart</a></li>
 									</ul>
 								</li>
@@ -131,7 +134,7 @@
 								<p class="subtitle">Fresh & Organic</p>
 								<h1>Delicious Seasonal Fruits</h1>
 								<div class="hero-btns">
-									<a href="shop.html" class="boxed-btn">Fruit Collection</a>
+									<a href="shop.php" class="boxed-btn">Lihat Produk</a>
 									<a href="contact.html" class="bordered-btn">Contact Us</a>
 								</div>
 							</div>
@@ -150,7 +153,7 @@
 								<p class="subtitle">Fresh Everyday</p>
 								<h1>100% Organic Collection</h1>
 								<div class="hero-btns">
-									<a href="shop.html" class="boxed-btn">Visit Shop</a>
+									<a href="shop.php" class="boxed-btn">Visit Shop</a>
 									<a href="contact.html" class="bordered-btn">Contact Us</a>
 								</div>
 							</div>
@@ -169,7 +172,7 @@
 								<p class="subtitle">Mega Sale Going On!</p>
 								<h1>Get December Discount</h1>
 								<div class="hero-btns">
-									<a href="shop.html" class="boxed-btn">Visit Shop</a>
+									<a href="shop.php" class="boxed-btn">Visit Shop</a>
 									<a href="contact.html" class="bordered-btn">Contact Us</a>
 								</div>
 							</div>
@@ -446,7 +449,7 @@
     	<div class="container">
         	<h3>December sale is on! <br> with big <span class="orange-text">Discount...</span></h3>
             <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
-            <a href="shop.html" class="cart-btn btn-lg">Shop Now</a>
+            <a href="shop.php" class="cart-btn btn-lg">Shop Now</a>
         </div>
     </section>
 	<!-- end shop banner -->

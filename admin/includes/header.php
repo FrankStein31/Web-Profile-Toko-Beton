@@ -223,12 +223,6 @@
                         Lihat Website
                     </a>
                 </li>
-                <li class="nav-item mt-4">
-                    <a href="profile.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'profile.php' ? 'active' : '' ?>">
-                        <i class="fas fa-user"></i>
-                        Profile
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a href="logout.php" class="nav-link" onclick="return confirm('Yakin ingin logout?')">
                         <i class="fas fa-sign-out-alt"></i>
@@ -252,9 +246,9 @@
                 </div>
                 <div>
                     <span class="me-3">Selamat datang, <strong><?= $_SESSION['admin_nama'] ?></strong></span>
-                    <a href="profile.php" class="btn btn-outline-primary btn-sm">
+                    <!-- <a href="profile.php" class="btn btn-outline-primary btn-sm">
                         <i class="fas fa-user"></i>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>
