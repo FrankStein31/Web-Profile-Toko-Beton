@@ -173,7 +173,7 @@ include 'includes/header.php';
                                 <td><?= $prod['id'] ?></td>
                                 <td>
                                     <?php if ($prod['gambar_utama']): ?>
-                                        <img src="<?= BASE_URL . PRODUK_IMG_PATH . $prod['gambar_utama'] ?>" 
+                                        <img src="<?= PRODUK_IMG_URL . $prod['gambar_utama'] ?>" 
                                              alt="<?= htmlspecialchars($prod['nama_produk']) ?>"
                                              class="rounded" width="60" height="60" style="object-fit: cover;">
                                     <?php else: ?>
@@ -338,7 +338,7 @@ include 'includes/header.php';
                     </div>
                     
                     <div class="image-preview" <?= !isset($produk['gambar_utama']) ? 'style="display: none;"' : '' ?>>
-                        <img src="<?= isset($produk['gambar_utama']) ? BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] : '#' ?>" 
+                        <img src="<?= isset($produk['gambar_utama']) ? PRODUK_IMG_URL . $produk['gambar_utama'] : '#' ?>" 
                              alt="Preview" class="img-fluid rounded border" style="max-height: 200px;">
                     </div>
                 </div>

@@ -208,6 +208,27 @@ try {
 			color: #ddd;
 			margin-bottom: 20px;
 		}
+
+		/* Better button UI for empty state */
+		.no-products .back-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			padding: 12px 22px;
+			background: #F28123;
+			color: #fff;
+			border-radius: 30px;
+			text-decoration: none;
+			font-weight: 600;
+			box-shadow: 0 6px 14px rgba(242,129,35,0.25);
+			transition: transform .15s ease, box-shadow .15s ease;
+		}
+		.no-products .back-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 20px rgba(242,129,35,0.35);
+			color: #fff;
+		}
+		.no-products .back-btn i { font-size: 16px; }
 	</style>
 </head>
 <body>
@@ -228,7 +249,7 @@ try {
 					<div class="main-menu-wrap">
 						<!-- logo -->
 						<div class="site-logo">
-							<a href="index.html">
+						<a href="<?= BASE_URL ?>admin/login.php">
 								<img src="assets/img/logo1.png" alt="Logo" style="max-height: 70px; height: auto; width: auto;">
 							</a>
 						</div>
@@ -387,7 +408,7 @@ try {
 							<div class="product-item">
 								<div class="product-image">
 									<?php if ($produk['gambar_utama']): ?>
-										<img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
+										<img src="<?= PRODUK_IMG_URL . $produk['gambar_utama'] ?>" 
 										     alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
 									<?php else: ?>
 										<img src="assets/img/products/default-product.jpg" 
@@ -437,8 +458,8 @@ try {
 							<i class="fas fa-search"></i>
 							<h3>Produk Tidak Ditemukan</h3>
 							<p>Maaf, tidak ada produk yang sesuai dengan kriteria pencarian Anda.</p>
-							<a href="shop.php" class="btn btn-primary">
-								<i class="fas fa-arrow-left"></i> Lihat Semua Produk
+							<a href="shop.php" class="boxed-btn back-btn">
+								Lihat Semua Produk
 							</a>
 						</div>
 					</div>
@@ -472,7 +493,7 @@ try {
 					<div class="footer-box pages">
 						<h2 class="widget-title">Pages</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="index.php">Home</a></li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="shop.php">Shop</a></li>
 							<li><a href="news.html">News</a></li>
@@ -484,7 +505,7 @@ try {
 					<div class="footer-box subscribe">
 						<h2 class="widget-title">Subscribe</h2>
 						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.html">
+						<form action="index.php">
 							<input type="email" placeholder="Email">
 							<button type="submit"><i class="fas fa-paper-plane"></i></button>
 						</form>

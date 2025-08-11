@@ -15,8 +15,8 @@ date_default_timezone_set('Asia/Jakarta');
 define('BASE_URL', 'http://localhost/WebProfile/');
 define('ADMIN_URL', BASE_URL . 'admin/');
 
-// Upload paths
-define('UPLOAD_PATH', 'assets/img/uploads/');
+// Upload paths - using absolute paths
+define('UPLOAD_PATH', $_SERVER['DOCUMENT_ROOT'] . '/WebProfile/assets/img/uploads/');
 define('KATEGORI_IMG_PATH', UPLOAD_PATH . 'kategori/');
 define('PRODUK_IMG_PATH', UPLOAD_PATH . 'produk/');
 
@@ -29,4 +29,7 @@ session_start();
 // Error reporting (set to 0 in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+define('KATEGORI_IMG_URL', BASE_URL . 'assets/img/uploads/kategori/');
+define('PRODUK_IMG_URL', BASE_URL . 'assets/img/uploads/produk/');
 ?>

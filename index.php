@@ -41,6 +41,29 @@ try {
 	<!-- responsive -->
 	<link rel="stylesheet" href="assets/css/responsive.css">
 
+<style>
+    .product-item {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+    }
+    .product-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .product-image { position: relative; overflow: hidden; border-radius: 10px 10px 0 0; height: 250px; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .product-item:hover .product-image img { transform: scale(1.05); }
+    .product-badge { position: absolute; top: 15px; left: 15px; background: #F28123; color: #fff; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600; }
+    .product-info { padding: 20px; }
+    .product-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; color: #2c3e50; }
+    .product-category { color: #F28123; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .product-price { font-size: 20px; font-weight: 700; color: #27ae60; margin-bottom: 10px; }
+    .product-description { color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
+</style>
+
 </head>
 <body>
 	
@@ -210,81 +233,57 @@ try {
         </div>
 
         <?php if (!empty($featuredProducts)): ?>
-            <!-- Produk dari Database -->
             <div class="row">
-                <?php foreach (array_slice($featuredProducts, 0, 4) as $produk): ?>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="single-product-item">
+                <?php foreach ($featuredProducts as $produk): ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-item">
                             <div class="product-image">
                                 <a href="single-product.php?id=<?= $produk['id'] ?>">
                                     <?php if ($produk['gambar_utama']): ?>
-                                        <img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
-                                             alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                        <img src="<?= PRODUK_IMG_URL . $produk['gambar_utama'] ?>" alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
                                     <?php else: ?>
-                                        <img src="assets/img/products/default-product.jpg" 
-                                             alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                        <img src="assets/img/products/default-product.jpg" alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
                                     <?php endif; ?>
                                 </a>
-                            </div>
-                            <h3><?= htmlspecialchars($produk['nama_produk']) ?></h3>
-                            <p class="product-price">
-                                <span>Per <?= ucfirst($produk['satuan']) ?></span> 
-                                <?php if ($produk['harga'] > 0): ?>
-                                    <?= formatRupiah($produk['harga']) ?>
-                                <?php else: ?>
-                                    <span class="text-info">Hubungi Kami</span>
+                                <?php if (!empty($produk['nama_kategori'])): ?>
+                                    <div class="product-badge"><?= htmlspecialchars($produk['nama_kategori']) ?></div>
                                 <?php endif; ?>
-                            </p>
-                            <a href="single-product.php?id=<?= $produk['id'] ?>" class="cart-btn">
-                                <i class="fas fa-eye"></i> Lihat Detail
-                            </a>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category"><?= htmlspecialchars($produk['nama_kategori'] ?? '') ?></div>
+                                <h3 class="product-title"><?= htmlspecialchars($produk['nama_produk']) ?></h3>
+                                <?php if ((int)$produk['harga'] > 0): ?>
+                                    <div class="product-price">
+                                        <?= formatRupiah($produk['harga']) ?>
+                                        <small>/ <?= htmlspecialchars($produk['satuan']) ?></small>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="product-price text-info">Hubungi Kami</div>
+                                <?php endif; ?>
+                                <?php if (!empty($produk['deskripsi'])): ?>
+                                    <p class="product-description">
+                                        <?= htmlspecialchars(substr($produk['deskripsi'], 0, 100)) ?><?= strlen($produk['deskripsi']) > 100 ? '...' : '' ?>
+                                    </p>
+                                <?php endif; ?>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="single-product.php?id=<?= $produk['id'] ?>" class="btn btn-primary">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+                                    <div class="text-end">
+                                        <small class="text-muted">Stok: <?= (int)$produk['stok'] ?> <?= htmlspecialchars($produk['satuan']) ?></small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
-
-            <?php if (count($featuredProducts) > 4): ?>
-                <!-- Produk Baris 2 -->
-                <div class="row mt-4">
-                    <?php foreach (array_slice($featuredProducts, 4, 4) as $produk): ?>
-                        <div class="col-lg-3 col-md-6 text-center">
-                            <div class="single-product-item">
-                                <div class="product-image">
-                                    <a href="single-product.php?id=<?= $produk['id'] ?>">
-                                        <?php if ($produk['gambar_utama']): ?>
-                                            <img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
-                                                 alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
-                                        <?php else: ?>
-                                            <img src="assets/img/products/default-product.jpg" 
-                                                 alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
-                                        <?php endif; ?>
-                                    </a>
-                                </div>
-                                <h3><?= htmlspecialchars($produk['nama_produk']) ?></h3>
-                                <p class="product-price">
-                                    <span>Per <?= ucfirst($produk['satuan']) ?></span> 
-                                    <?php if ($produk['harga'] > 0): ?>
-                                        <?= formatRupiah($produk['harga']) ?>
-                                    <?php else: ?>
-                                        <span class="text-info">Hubungi Kami</span>
-                                    <?php endif; ?>
-                                </p>
-                                <a href="single-product.php?id=<?= $produk['id'] ?>" class="cart-btn">
-                                    <i class="fas fa-eye"></i> Lihat Detail
-                                </a>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-            
             <div class="row mt-4">
                 <div class="col-12 text-center">
                     <a href="shop.php" class="boxed-btn">Lihat Semua Produk</a>
                 </div>
             </div>
         <?php else: ?>
-            <!-- Fallback jika tidak ada produk -->
             <div class="row">
                 <div class="col-12 text-center">
                     <p class="text-muted">Produk sedang dalam proses update. Silakan hubungi kami untuk informasi lebih lanjut.</p>
@@ -320,7 +319,7 @@ try {
                     <h4>Beton Ready Mix Berkualitas</h4>
                     <div class="text">Dapatkan diskon spesial untuk pemesanan beton ready mix dalam jumlah besar. Kualitas terjamin sesuai standar SNI, siap kirim ke lokasi proyek Anda.</div>
                     <!--Countdown Timer-->
-                    <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2025/12/31"><div class="counter-column"><div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div>
+                    <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2025/12/31"><div class="counter-column"><div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div></div>
                 	<a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Halo%2C%20saya%20tertarik%20dengan%20promo%20beton%20ready%20mix%20dari%20Turen%20Indah%20Bangunan" class="cart-btn mt-3" target="_blank">
                         <i class="fab fa-whatsapp"></i> Hubungi Sekarang
                     </a>

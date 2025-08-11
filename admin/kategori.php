@@ -157,7 +157,7 @@ include 'includes/header.php';
                                 <td><?= $kat['id'] ?></td>
                                 <td>
                                     <?php if ($kat['gambar']): ?>
-                                        <img src="<?= BASE_URL . KATEGORI_IMG_PATH . $kat['gambar'] ?>" 
+                                        <img src="<?= KATEGORI_IMG_URL . $kat['gambar'] ?>" 
                                              alt="<?= htmlspecialchars($kat['nama_kategori']) ?>"
                                              class="rounded" width="60" height="60" style="object-fit: cover;">
                                     <?php else: ?>
@@ -260,7 +260,7 @@ include 'includes/header.php';
                     </div>
                     
                     <div class="image-preview" <?= !isset($kategori['gambar']) ? 'style="display: none;"' : '' ?>>
-                        <img src="<?= isset($kategori['gambar']) ? BASE_URL . KATEGORI_IMG_PATH . $kategori['gambar'] : '#' ?>" 
+                        <img src="<?= isset($kategori['gambar']) ? KATEGORI_IMG_URL . $kategori['gambar'] : '#' ?>" 
                              alt="Preview" class="img-fluid rounded border" style="max-height: 200px;">
                     </div>
                 </div>
