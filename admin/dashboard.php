@@ -134,7 +134,7 @@ include 'includes/header.php';
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <?php if ($produk['gambar_utama']): ?>
-                                                <img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
+                                                <img src="<?= PRODUK_IMG_URL . $produk['gambar_utama'] ?>" 
                                                      alt="<?= htmlspecialchars($produk['nama_produk']) ?>"
                                                      class="rounded me-2" width="40" height="40" style="object-fit: cover;">
                                             <?php else: ?>

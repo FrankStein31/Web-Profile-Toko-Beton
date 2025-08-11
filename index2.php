@@ -34,6 +34,20 @@ require_once 'includes/init.php';
 	<!-- responsive -->
 	<link rel="stylesheet" href="assets/css/responsive.css">
 
+	<style>
+.product-item{background:#fff;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:all .3s ease;margin-bottom:30px}
+.product-item:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.15)}
+.product-image{position:relative;overflow:hidden;border-radius:10px 10px 0 0;height:250px}
+.product-image img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.product-item:hover .product-image img{transform:scale(1.05)}
+.product-badge{position:absolute;top:15px;left:15px;background:#F28123;color:#fff;padding:5px 10px;border-radius:15px;font-size:12px;font-weight:600}
+.product-info{padding:20px}
+.product-title{font-size:18px;font-weight:600;margin-bottom:10px;color:#2c3e50}
+.product-category{color:#F28123;font-size:14px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.product-price{font-size:20px;font-weight:700;color:#27ae60;margin-bottom:10px}
+.product-description{color:#666;font-size:14px;line-height:1.5;margin-bottom:15px}
+</style>
+
 </head>
 <body>
 	
@@ -230,110 +244,83 @@ require_once 'includes/init.php';
 
 	<!-- product section -->
 	<div class="product-section mt-150 mb-150">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="section-title">	
-						<h3><span class="orange-text">Our</span> Products</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
-					</div>
-				</div>
-			</div>
-
-       <!-- Produk Baris 1 -->
+    <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
-                    </div>
-                    <h3>Strawberry</h3>
-                    <p class="product-price"><span>Per Kg</span> 85$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
-                    </div>
-                    <h3>Berry</h3>
-                    <p class="product-price"><span>Per Kg</span> 70$</p>
-                   <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
-                    </div>
-                    <h3>Lemon</h3>
-                    <p class="product-price"><span>Per Kg</span> 35$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-4.jpg" alt=""></a>
-                    </div>
-                    <h3>Apple</h3>
-                    <p class="product-price"><span>Per Kg</span> 50$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title"> 
+                    <h3><span class="orange-text">Produk</span> Kami</h3>
+                    <p>Produk unggulan siap memenuhi kebutuhan konstruksi Anda</p>
                 </div>
             </div>
         </div>
 
-        <!-- Produk Baris 2 -->
-        <div class="row mt-4">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href=""><img src="assets/img/products/product-img-5.jpg" alt=""></a>
+        <?php 
+        // Ambil produk aktif terbaru kalau belum ada variabel
+        if (!isset($produkModel)) { require_once 'includes/init.php'; }
+        try { $featured = $produkModel->getFeatured(8); } catch (Exception $e) { $featured = []; }
+        ?>
+
+        <?php if (!empty($featured)): ?>
+            <div class="row">
+                <?php foreach ($featured as $produk): ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-item">
+                            <div class="product-image">
+                                <a href="single-product.php?id=<?= $produk['id'] ?>">
+                                    <?php if ($produk['gambar_utama']): ?>
+                                        <img src="<?= PRODUK_IMG_URL . $produk['gambar_utama'] ?>" alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                    <?php else: ?>
+                                        <img src="assets/img/products/default-product.jpg" alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
+                                    <?php endif; ?>
+                                </a>
+                                <?php if (!empty($produk['nama_kategori'])): ?>
+                                    <div class="product-badge"><?= htmlspecialchars($produk['nama_kategori']) ?></div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category"><?= htmlspecialchars($produk['nama_kategori'] ?? '') ?></div>
+                                <h3 class="product-title"><?= htmlspecialchars($produk['nama_produk']) ?></h3>
+                                <?php if ((int)$produk['harga'] > 0): ?>
+                                    <div class="product-price">
+                                        <?= formatRupiah($produk['harga']) ?>
+                                        <small>/ <?= htmlspecialchars($produk['satuan']) ?></small>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="product-price text-info">Hubungi Kami</div>
+                                <?php endif; ?>
+                                <?php if (!empty($produk['deskripsi'])): ?>
+                                    <p class="product-description">
+                                        <?= htmlspecialchars(substr($produk['deskripsi'], 0, 100)) ?><?= strlen($produk['deskripsi']) > 100 ? '...' : '' ?>
+                                    </p>
+                                <?php endif; ?>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="single-product.php?id=<?= $produk['id'] ?>" class="btn btn-primary">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+                                    <div class="text-end">
+                                        <small class="text-muted">Stok: <?= (int)$produk['stok'] ?> <?= htmlspecialchars($produk['satuan']) ?></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Banana</h3>
-                    <p class="product-price"><span>Per Kg</span> 25$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                <?php endforeach; ?>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="shop.php" class="boxed-btn">Lihat Semua Produk</a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-6.jpg" alt=""></a>
-                    </div>
-                    <h3>Pineapple</h3>
-                    <p class="product-price"><span>Per Kg</span> 40$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="text-muted">Produk sedang dalam proses update.</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-7.jpg" alt=""></a>
-                    </div>
-                    <h3>Watermelon</h3>
-                    <p class="product-price"><span>Per Kg</span> 60$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="#"><img src="assets/img/products/product-img-8.jpg" alt=""></a>
-                    </div>
-                    <h3>Orange</h3>
-                    <p class="product-price"><span>Per Kg</span> 45$</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end product section -->
+<!-- end product section -->
 
 	<!-- cart banner section -->
 	<section class="cart-banner pt-100 pb-100">
@@ -572,7 +559,7 @@ require_once 'includes/init.php';
 					<div class="footer-box pages">
 						<h2 class="widget-title">Pages</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="index.php">Home</a></li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="services.html">Shop</a></li>
 							<li><a href="news.html">News</a></li>
@@ -584,7 +571,7 @@ require_once 'includes/init.php';
 					<div class="footer-box subscribe">
 						<h2 class="widget-title">Subscribe</h2>
 						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.html">
+						<form action="index.php">
 							<input type="email" placeholder="Email">
 							<button type="submit"><i class="fas fa-paper-plane"></i></button>
 						</form>

@@ -22,6 +22,7 @@ function formatTanggal($date) {
 
 function uploadImage($file, $targetDir, $allowedTypes = ['jpg', 'jpeg', 'png', 'gif']) {
     if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
+        error_log("Upload error: File not set or error occurred. Error code: " . ($file['error'] ?? 'undefined'));
         return false;
     }
     
@@ -42,16 +43,25 @@ function uploadImage($file, $targetDir, $allowedTypes = ['jpg', 'jpeg', 'png', '
     
     // Create directory if not exists
     if (!is_dir($targetDir)) {
+        error_log("Creating directory: " . $targetDir);
         mkdir($targetDir, 0777, true);
     }
     
     $newFileName = time() . '_' . uniqid() . '.' . $fileExt;
     $targetPath = $targetDir . $newFileName;
     
+    error_log("Attempting to upload file:");
+    error_log("- Source: " . $fileTmpName);
+    error_log("- Target: " . $targetPath);
+    error_log("- Directory exists: " . (is_dir($targetDir) ? 'YES' : 'NO'));
+    error_log("- Directory writable: " . (is_writable($targetDir) ? 'YES' : 'NO'));
+    
     if (move_uploaded_file($fileTmpName, $targetPath)) {
+        error_log("Upload successful: " . $targetPath);
         return $newFileName;
     }
     
+    error_log("Upload failed for: " . $targetPath);
     return false;
 }
 

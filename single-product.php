@@ -263,7 +263,7 @@ try {
 					<div class="main-menu-wrap">
 						<!-- logo -->
 						<div class="site-logo">
-							<a href="index.html">
+							<a href="<?= BASE_URL ?>admin/login.php">
 								<img src="assets/img/logo1.png" alt="Logo" style="max-height: 70px; height: auto; width: auto;">
 							</a>
 						</div>
@@ -272,10 +272,10 @@ try {
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li><a href="index.html">Home</a>
+								<li><a href="index.php">Home</a>
 									<ul class="sub-menu">
-										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
+										<li><a href="index.php">Static Home</a></li>
+										<li><a href="index_2.php">Slider Home</a></li>
 									</ul>
 								</li>
 								<li><a href="about.html">About</a></li>
@@ -334,7 +334,7 @@ try {
 			<!-- Breadcrumb -->
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb breadcrumb-custom">
-					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item"><a href="index.php">Home</a></li>
 					<li class="breadcrumb-item"><a href="shop.php">Produk</a></li>
 					<li class="breadcrumb-item"><a href="shop.php?kategori=<?= $produk['id_kategori'] ?>"><?= htmlspecialchars($produk['nama_kategori']) ?></a></li>
 					<li class="breadcrumb-item active"><?= htmlspecialchars($produk['nama_produk']) ?></li>
@@ -346,7 +346,7 @@ try {
 					<div class="col-md-6">
 						<div class="product-image-section">
 							<?php if ($produk['gambar_utama']): ?>
-								<img src="<?= BASE_URL . PRODUK_IMG_PATH . $produk['gambar_utama'] ?>" 
+								<img src="<?= PRODUK_IMG_URL . $produk['gambar_utama'] ?>" 
 								     alt="<?= htmlspecialchars($produk['nama_produk']) ?>"
 								     class="product-main-image">
 							<?php else: ?>
@@ -464,7 +464,7 @@ try {
 								<div class="related-item">
 									<div class="related-image">
 										<?php if ($related['gambar_utama']): ?>
-											<img src="<?= BASE_URL . PRODUK_IMG_PATH . $related['gambar_utama'] ?>" 
+											<img src="<?= PRODUK_IMG_URL . $related['gambar_utama'] ?>" 
 											     alt="<?= htmlspecialchars($related['nama_produk']) ?>">
 										<?php else: ?>
 											<img src="assets/img/products/default-product.jpg" 
@@ -525,7 +525,7 @@ try {
 					<div class="footer-box pages">
 						<h2 class="widget-title">Pages</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="index.php">Home</a></li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="shop.php">Shop</a></li>
 							<li><a href="news.html">News</a></li>
@@ -537,7 +537,7 @@ try {
 					<div class="footer-box subscribe">
 						<h2 class="widget-title">Subscribe</h2>
 						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.html">
+						<form action="index.php">
 							<input type="email" placeholder="Email">
 							<button type="submit"><i class="fas fa-paper-plane"></i></button>
 						</form>
