@@ -135,6 +135,7 @@
         .stats-card.success .icon { background: var(--success-color); }
         .stats-card.warning .icon { background: var(--warning-color); }
         .stats-card.danger .icon { background: var(--danger-color); }
+        .stats-card.info .icon { background: var(--accent-color); }
         
         .btn-action {
             padding: 0.375rem 0.75rem;
@@ -215,6 +216,12 @@
                     <a href="produk.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'produk.php' ? 'active' : '' ?>">
                         <i class="fas fa-boxes"></i>
                         Produk
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="berita.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'berita.php' ? 'active' : '' ?>">
+                        <i class="fas fa-newspaper"></i>
+                        Berita
                     </a>
                 </li>
                 <li class="nav-item">

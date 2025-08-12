@@ -23,6 +23,7 @@ try {
 $kategoriModel = new Kategori($database);
 $produkModel = new Produk($database);
 $adminModel = new Admin($database);
+$beritaModel = new BeritaModel($database);
 
 // Set error handling
 set_error_handler(function($severity, $message, $file, $line) {

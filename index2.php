@@ -1,5 +1,12 @@
 <?php
 require_once 'includes/init.php';
+
+// Get latest news from database
+try {
+    $latestNews = $beritaModel->getRecent(3);
+} catch (Exception $e) {
+    $latestNews = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,26 +89,26 @@ require_once 'includes/init.php';
 										<li><a href="index2.php">Slider Home</a></li>
 									</ul>
 								</li>
-								<li><a href="about.html">About</a></li>
+								<li><a href="about.php">About</a></li>
 
-								<li><a href="news.html">News</a>
+								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
+										<li><a href="news.php">News</a></li>
+										<li><a href="single-news.php">Single News</a></li>
 									</ul>
 								</li>
-								<li><a href="contact.html">Contact</a></li>
+								<li><a href="contact.php">Contact</a></li>
 								<li><a href="shop.php">Shop</a>
 									<ul class="sub-menu">
 										<li><a href="shop.php">Shop</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
+										<li><a href="checkout.php">Check Out</a></li>
 										<li><a href="single-product.php">Single Product</a></li>
-										<li><a href="cart.html">Cart</a></li>
+										<li><a href="cart.php">Cart</a></li>
 									</ul>
 								</li>
 								<li>
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 									</div>
 								</li>
@@ -149,7 +156,7 @@ require_once 'includes/init.php';
 								<h1>Delicious Seasonal Fruits</h1>
 								<div class="hero-btns">
 									<a href="shop.php" class="boxed-btn">Lihat Produk</a>
-									<a href="contact.html" class="bordered-btn">Contact Us</a>
+									<a href="contact.php" class="bordered-btn">Contact Us</a>
 								</div>
 							</div>
 						</div>
@@ -168,7 +175,7 @@ require_once 'includes/init.php';
 								<h1>100% Organic Collection</h1>
 								<div class="hero-btns">
 									<a href="shop.php" class="boxed-btn">Visit Shop</a>
-									<a href="contact.html" class="bordered-btn">Contact Us</a>
+									<a href="contact.php" class="bordered-btn">Contact Us</a>
 								</div>
 							</div>
 						</div>
@@ -187,7 +194,7 @@ require_once 'includes/init.php';
 								<h1>Get December Discount</h1>
 								<div class="hero-btns">
 									<a href="shop.php" class="boxed-btn">Visit Shop</a>
-									<a href="contact.html" class="bordered-btn">Contact Us</a>
+									<a href="contact.php" class="bordered-btn">Contact Us</a>
 								</div>
 							</div>
 						</div>
@@ -346,7 +353,7 @@ require_once 'includes/init.php';
                     <div class="text">Quisquam minus maiores repudiandae nobis, minima saepe id, fugit ullam similique! Beatae, minima quisquam molestias facere ea. Perspiciatis unde omnis iste natus error sit voluptatem accusant</div>
                     <!--Countdown Timer-->
                     <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2020/2/01"><div class="counter-column"><div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div>
-                	<a href="cart.html" class="cart-btn mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                	<a href="cart.php" class="cart-btn mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
             </div>
         </div>
@@ -419,11 +426,11 @@ require_once 'includes/init.php';
 				</div>
 				<div class="col-lg-6 col-md-12">
 					<div class="abt-text">
-						<p class="top-sub">Since Year 1999</p>
-						<h2>We are <span class="orange-text">Fruitkha</span></h2>
-						<p>Etiam vulputate ut augue vel sodales. In sollicitudin neque et massa porttitor vestibulum ac vel nisi. Vestibulum placerat eget dolor sit amet posuere. In ut dolor aliquet, aliquet sapien sed, interdum velit. Nam eu molestie lorem.</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente facilis illo repellat veritatis minus, et labore minima mollitia qui ducimus.</p>
-						<a href="about.html" class="boxed-btn mt-4">know more</a>
+						<p class="top-sub">Sejak Tahun 1999</p>
+						<h2>Kami Adalah <span class="orange-text">Turen Indah Bangunan</span></h2>
+						<p>Sebagai perusahaan yang bergerak di bidang material bangunan dan beton, kami telah melayani ribuan proyek konstruksi di wilayah Malang dan sekitarnya dengan komitmen tinggi terhadap kualitas dan kepuasan pelanggan.</p>
+						<p>Dengan pengalaman puluhan tahun, kami memahami kebutuhan konstruksi modern dan menyediakan solusi material terbaik untuk setiap jenis proyek.</p>
+						<a href="about.php" class="boxed-btn mt-4">Selengkapnya</a>
 					</div>
 				</div>
 			</div>
@@ -434,9 +441,9 @@ require_once 'includes/init.php';
 	<!-- shop banner -->
 	<section class="shop-banner">
     	<div class="container">
-        	<h3>December sale is on! <br> with big <span class="orange-text">Discount...</span></h3>
-            <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
-            <a href="shop.php" class="cart-btn btn-lg">Shop Now</a>
+        	<h3>Promo Akhir Tahun! <br> dengan <span class="orange-text">Diskon Besar...</span></h3>
+            <div class="sale-percent"><span>Diskon! <br> Hingga</span>25% <span>off</span></div>
+            <a href="shop.php" class="cart-btn btn-lg">Belanja Sekarang</a>
         </div>
     </section>
 	<!-- end shop banner -->
@@ -448,59 +455,81 @@ require_once 'includes/init.php';
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="section-title">	
-						<h3><span class="orange-text">Our</span> News</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+						<h3><span class="orange-text">Berita</span> Terbaru</h3>
+						<p>Informasi terkini seputar konstruksi, tips bangunan, dan update produk dari Turen Indah Bangunan</p>
 					</div>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-1"></div></a>
-						<div class="news-text-box">
-							<h3><a href="single-news.html">You will vainly look for fruit on it in autumn.</a></h3>
-							<p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
-							</p>
-							<p class="excerpt">Vivamus lacus enim, pulvinar vel nulla sed, scelerisque rhoncus nisi. Praesent vitae mattis nunc, egestas viverra eros.</p>
-							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+				<?php if (!empty($latestNews)): ?>
+					<?php foreach ($latestNews as $index => $news): ?>
+						<div class="col-lg-4 col-md-6">
+							<div class="single-latest-news">
+								<a href="single-news.php?slug=<?= $news['slug'] ?>">
+									<div class="latest-news-bg" style="background-image: url('<?= $news['gambar'] ? BERITA_IMG_URL . $news['gambar'] : 'assets/img/latest-news/news-bg-' . (($index % 3) + 1) . '.jpg' ?>'); background-size: cover; background-position: center; height: 300px; border-radius: 10px;"></div>
+								</a>
+								<div class="news-text-box">
+									<h3><a href="single-news.php?slug=<?= $news['slug'] ?>"><?= htmlspecialchars($news['judul']) ?></a></h3>
+									<p class="blog-meta">
+										<span class="author"><i class="fas fa-user"></i> Admin</span>
+										<span class="date"><i class="fas fa-calendar"></i> <?= $news['tanggal_format'] ?></span>
+									</p>
+									<p class="excerpt"><?= htmlspecialchars(substr($news['deskripsi'], 0, 120)) ?><?= strlen($news['deskripsi']) > 120 ? '...' : '' ?></p>
+									<a href="single-news.php?slug=<?= $news['slug'] ?>" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				<?php else: ?>
+					<!-- Fallback content when no news available -->
+					<div class="col-lg-4 col-md-6">
+						<div class="single-latest-news">
+							<a href="news.php"><div class="latest-news-bg news-bg-1"></div></a>
+							<div class="news-text-box">
+								<h3><a href="news.php">Tips Memilih Beton Ready Mix yang Berkualitas</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> Admin</span>
+									<span class="date"><i class="fas fa-calendar"></i> 15 Agustus, 2025</span>
+								</p>
+								<p class="excerpt">Panduan lengkap memilih beton ready mix yang sesuai dengan kebutuhan proyek konstruksi Anda.</p>
+								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-2"></div></a>
-						<div class="news-text-box">
-							<h3><a href="single-news.html">A man's worth has its season, like tomato.</a></h3>
-							<p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
-							</p>
-							<p class="excerpt">Vivamus lacus enim, pulvinar vel nulla sed, scelerisque rhoncus nisi. Praesent vitae mattis nunc, egestas viverra eros.</p>
-							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+					<div class="col-lg-4 col-md-6">
+						<div class="single-latest-news">
+							<a href="news.php"><div class="latest-news-bg news-bg-2"></div></a>
+							<div class="news-text-box">
+								<h3><a href="news.php">Inovasi Terbaru dalam Industri Beton Precast</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> Admin</span>
+									<span class="date"><i class="fas fa-calendar"></i> 10 Agustus, 2025</span>
+								</p>
+								<p class="excerpt">Mengenal teknologi terbaru dalam produksi beton precast yang lebih efisien dan berkualitas.</p>
+								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-3"></div></a>
-						<div class="news-text-box">
-							<h3><a href="single-news.html">Good thoughts bear good fresh juicy fruit.</a></h3>
-							<p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
-							</p>
-							<p class="excerpt">Vivamus lacus enim, pulvinar vel nulla sed, scelerisque rhoncus nisi. Praesent vitae mattis nunc, egestas viverra eros.</p>
-							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+					<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
+						<div class="single-latest-news">
+							<a href="news.php"><div class="latest-news-bg news-bg-3"></div></a>
+							<div class="news-text-box">
+								<h3><a href="news.php">Standar Kualitas Beton SNI untuk Konstruksi</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> Admin</span>
+									<span class="date"><i class="fas fa-calendar"></i> 5 Agustus, 2025</span>
+								</p>
+								<p class="excerpt">Memahami standar kualitas beton menurut SNI dan pentingnya dalam konstruksi bangunan.</p>
+								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
+				<?php endif; ?>
 			</div>
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<a href="news.html" class="boxed-btn">More News</a>
+					<a href="news.php" class="boxed-btn">Berita Lainnya</a>
 				</div>
 			</div>
 		</div>
@@ -542,16 +571,16 @@ require_once 'includes/init.php';
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box about-widget">
 						<h2 class="widget-title">About us</h2>
-						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+						<p>Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box get-in-touch">
 						<h2 class="widget-title">Get in Touch</h2>
 						<ul>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/6" onclick="showInstagram()">@turenindah.bangunan</a></li>
+							<li><a href="https://www.instagram.com/turenindah.bangunan/">@turenindah.bangunan</a></li>
 							<li><a href="mailto:info@turenindahbangunan.com">info@turenindahbangunan.com</a></li>
-							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Saya+mendapat+informasi+dari+Wabsite%2C+ingin+lebih+tahu+tentang+informasi+harga+Produk+Yang+ada+di+Turen+Indah+Bangunan&type=phone_number&app_absent=0" onclick="showPhone()">+62 812-5246-2983</a></li>
+							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983">+62 812-5246-2983</a></li>
 						</ul>
 					</div>
 				</div>
@@ -560,10 +589,10 @@ require_once 'includes/init.php';
 						<h2 class="widget-title">Pages</h2>
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="services.html">Shop</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="about.php">About</a></li>
+							<li><a href="shop.php">Shop</a></li>
+							<li><a href="news.php">News</a></li>
+							<li><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -587,8 +616,8 @@ require_once 'includes/init.php';
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-12">
-					<p>Copyrights &copy; 2019 - <a href="">Im sama</a>,  All Rights Reserved.<br>
-						Distributed By - <a href="">Thelord</a>
+					<p>&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br>
+						Distributed By - <a href="#">Thelord</a>
 					</p>
 				</div>
 				<div class="col-lg-6 text-right col-md-12">
@@ -596,7 +625,7 @@ require_once 'includes/init.php';
 						<ul>
 							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
 						</ul>

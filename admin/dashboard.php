@@ -10,16 +10,22 @@ try {
     $totalProduk = $produkModel->getAll();
     $produkAktif = $produkModel->getByStatus('aktif');
     $produkStokRendah = $db->query("SELECT COUNT(*) as count FROM produk WHERE stok <= 5 AND status = 'aktif'")->fetch();
+    $beritaStats = $beritaModel->getStats();
     
     $stats = [
         'total_kategori' => count($totalKategori),
         'total_produk' => count($totalProduk),
         'produk_aktif' => count($produkAktif),
-        'stok_rendah' => $produkStokRendah['count']
+        'stok_rendah' => $produkStokRendah['count'],
+        'total_berita' => $beritaStats['total'],
+        'berita_aktif' => $beritaStats['aktif']
     ];
     
     // Get latest products
     $latestProduk = $produkModel->getLatest(5);
+    
+    // Get latest news
+    $latestBerita = $beritaModel->getRecent(5);
     
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -105,9 +111,41 @@ include 'includes/header.php';
     </div>
 </div>
 
+<!-- Second Row Statistics -->
+<div class="row mb-4">
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="stats-card info">
+            <div class="d-flex align-items-center">
+                <div class="icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="ms-3">
+                    <div class="text-muted small">Total Berita</div>
+                    <div class="h4 mb-0"><?= $stats['total_berita'] ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="stats-card primary">
+            <div class="d-flex align-items-center">
+                <div class="icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="ms-3">
+                    <div class="text-muted small">Berita Aktif</div>
+                    <div class="h4 mb-0"><?= $stats['berita_aktif'] ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Latest News and Products Row -->
 <div class="row">
     <!-- Latest Products -->
-    <div class="col-lg-8 mb-4">
+    <div class="col-lg-6 mb-4">
         <div class="table-container">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Produk Terbaru</h5>
@@ -178,8 +216,62 @@ include 'includes/header.php';
         </div>
     </div>
     
+    <!-- Latest News -->
+    <div class="col-lg-6 mb-4">
+        <div class="table-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Berita Terbaru</h5>
+                <a href="berita.php?action=add" class="btn btn-warning btn-sm">
+                    <i class="fas fa-plus"></i> Tambah Berita
+                </a>
+            </div>
+            
+            <?php if (!empty($latestBerita)): ?>
+                <div class="list-group list-group-flush">
+                    <?php foreach ($latestBerita as $berita): ?>
+                        <div class="list-group-item d-flex align-items-start">
+                            <?php if ($berita['gambar']): ?>
+                                <img src="<?= BERITA_IMG_URL . $berita['gambar'] ?>" 
+                                     alt="<?= htmlspecialchars($berita['judul']) ?>"
+                                     class="rounded me-3" width="60" height="45" style="object-fit: cover;">
+                            <?php else: ?>
+                                <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center" 
+                                     style="width: 60px; height: 45px;">
+                                    <i class="fas fa-newspaper text-muted"></i>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1"><?= htmlspecialchars(substr($berita['judul'], 0, 50)) ?><?= strlen($berita['judul']) > 50 ? '...' : '' ?></h6>
+                                <p class="mb-1 text-muted small"><?= htmlspecialchars(substr($berita['deskripsi'], 0, 80)) ?><?= strlen($berita['deskripsi']) > 80 ? '...' : '' ?></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"><?= $berita['tanggal_format'] ?></small>
+                                    <span class="badge <?= $berita['status'] == 'aktif' ? 'bg-success' : 'bg-secondary' ?> small">
+                                        <?= ucfirst($berita['status']) ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="berita.php" class="btn btn-outline-primary btn-sm">Lihat Semua Berita</a>
+                </div>
+            <?php else: ?>
+                <div class="text-center py-4">
+                    <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">Belum ada berita</p>
+                    <a href="berita.php?action=add" class="btn btn-warning">Tambah Berita Pertama</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions Row -->
+<div class="row">    
     <!-- Quick Actions -->
-    <div class="col-lg-4 mb-4">
+    <div class="col-lg-12 mb-4">
         <div class="form-container">
             <h5 class="mb-3">Quick Actions</h5>
             
@@ -189,6 +281,9 @@ include 'includes/header.php';
                 </a>
                 <a href="produk.php?action=add" class="btn btn-outline-success">
                     <i class="fas fa-plus"></i> Tambah Produk
+                </a>
+                <a href="berita.php?action=add" class="btn btn-outline-warning">
+                    <i class="fas fa-plus"></i> Tambah Berita
                 </a>
                 <a href="<?= BASE_URL ?>" class="btn btn-outline-info" target="_blank">
                     <i class="fas fa-external-link-alt"></i> Lihat Website
