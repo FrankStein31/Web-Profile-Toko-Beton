@@ -19,6 +19,7 @@ define('ADMIN_URL', BASE_URL . 'admin/');
 define('UPLOAD_PATH', $_SERVER['DOCUMENT_ROOT'] . '/WebProfile/assets/img/uploads/');
 define('KATEGORI_IMG_PATH', UPLOAD_PATH . 'kategori/');
 define('PRODUK_IMG_PATH', UPLOAD_PATH . 'produk/');
+define('BERITA_IMG_PATH', UPLOAD_PATH . 'berita/');
 
 // Session settings
 ini_set('session.cookie_httponly', 1);
@@ -32,4 +33,5 @@ ini_set('display_errors', 1);
 
 define('KATEGORI_IMG_URL', BASE_URL . 'assets/img/uploads/kategori/');
 define('PRODUK_IMG_URL', BASE_URL . 'assets/img/uploads/produk/');
+define('BERITA_IMG_URL', BASE_URL . 'assets/img/uploads/berita/');
 ?>

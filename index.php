@@ -7,6 +7,13 @@ try {
 } catch (Exception $e) {
     $featuredProducts = [];
 }
+
+// Get latest news from database
+try {
+    $latestNews = $beritaModel->getRecent(3);
+} catch (Exception $e) {
+    $latestNews = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -99,25 +106,25 @@ try {
 										<li><a href="index2.php">Slider Home</a></li>
 									</ul>
 								</li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="news.html">News</a>
+								<li><a href="about.php">About</a></li>
+								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
+										<li><a href="news.php">News</a></li>
+										<li><a href="single-news.php">Single News</a></li>
 									</ul>
 								</li>
-								<li><a href="contact.html">Contact</a></li>
+								<li><a href="contact.php">Contact</a></li>
 								<li><a href="shop.php">Shop</a>
 									<ul class="sub-menu">
 										<li><a href="shop.php">Shop</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
+										<li><a href="checkout.php">Check Out</a></li>
 										<li><a href="single-product.php">Single Product</a></li>
-										<li><a href="cart.html">Cart</a></li>
+										<li><a href="cart.php">Cart</a></li>
 									</ul>
 								</li>
 								<li>
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 									</div>
 								</li>
@@ -166,7 +173,7 @@ try {
 							<h3>Industri Material Bangunan dan Beton berkualitas tinggi dan terpercaya siap untuk berbagai kebutuhan konstruksi</h3>
 							<div class="hero-btns">
 								<a href="shop.php" class="boxed-btn">Lihat Produk</a>
-								<a href="contact.html" class="bordered-btn">Hubungi Kami</a>
+								<a href="contact.php" class="bordered-btn">Hubungi Kami</a>
 							</div>
 						</div>
 					</div>
@@ -287,7 +294,7 @@ try {
             <div class="row">
                 <div class="col-12 text-center">
                     <p class="text-muted">Produk sedang dalam proses update. Silakan hubungi kami untuk informasi lebih lanjut.</p>
-                    <a href="contact.html" class="boxed-btn">Hubungi Kami</a>
+                    <a href="contact.php" class="boxed-btn">Hubungi Kami</a>
                 </div>
             </div>
         <?php endif; ?>
@@ -399,7 +406,7 @@ try {
 						<h2>Kami Adalah <span class="orange-text">Turen Indah Bangunan</span></h2>
 						<p>Sebagai perusahaan yang bergerak di bidang material bangunan dan beton, kami telah melayani ribuan proyek konstruksi di wilayah Malang dan sekitarnya dengan komitmen tinggi terhadap kualitas dan kepuasan pelanggan.</p>
 						<p>Dengan pengalaman puluhan tahun, kami memahami kebutuhan konstruksi modern dan menyediakan solusi material terbaik untuk setiap jenis proyek.</p>
-						<a href="about.html" class="boxed-btn mt-4">Selengkapnya</a>
+						<a href="about.php" class="boxed-btn mt-4">Selengkapnya</a>
 					</div>
 				</div>
 			</div>
@@ -431,52 +438,74 @@ try {
 			</div>
 
 			<div class="row">
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-1"></div></a>
-						<div class="news-text-box">
-							<h3><a href="single-news.html">Tips Memilih Beton Ready Mix yang Berkualitas</a></h3>
-							<p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 15 Agustus, 2025</span>
-							</p>
-							<p class="excerpt">Panduan lengkap memilih beton ready mix yang sesuai dengan kebutuhan proyek konstruksi Anda.</p>
-							<a href="single-news.html" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+				<?php if (!empty($latestNews)): ?>
+					<?php foreach ($latestNews as $index => $news): ?>
+						<div class="col-lg-4 col-md-6">
+							<div class="single-latest-news">
+								<a href="single-news.php?slug=<?= $news['slug'] ?>">
+									<div class="latest-news-bg" style="background-image: url('<?= $news['gambar'] ? BERITA_IMG_URL . $news['gambar'] : 'assets/img/latest-news/news-bg-' . (($index % 3) + 1) . '.jpg' ?>'); background-size: cover; background-position: center; height: 300px; border-radius: 10px;"></div>
+								</a>
+								<div class="news-text-box">
+									<h3><a href="single-news.php?slug=<?= $news['slug'] ?>"><?= htmlspecialchars($news['judul']) ?></a></h3>
+									<p class="blog-meta">
+										<span class="author"><i class="fas fa-user"></i> Admin</span>
+										<span class="date"><i class="fas fa-calendar"></i> <?= $news['tanggal_format'] ?></span>
+									</p>
+									<p class="excerpt"><?= htmlspecialchars(substr($news['deskripsi'], 0, 120)) ?><?= strlen($news['deskripsi']) > 120 ? '...' : '' ?></p>
+									<a href="single-news.php?slug=<?= $news['slug'] ?>" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				<?php else: ?>
+					<!-- Fallback content when no news available -->
+					<div class="col-lg-4 col-md-6">
+						<div class="single-latest-news">
+							<a href="news.php"><div class="latest-news-bg news-bg-1"></div></a>
+							<div class="news-text-box">
+								<h3><a href="news.php">Tips Memilih Beton Ready Mix yang Berkualitas</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> Admin</span>
+									<span class="date"><i class="fas fa-calendar"></i> 15 Agustus, 2025</span>
+								</p>
+								<p class="excerpt">Panduan lengkap memilih beton ready mix yang sesuai dengan kebutuhan proyek konstruksi Anda.</p>
+								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-2"></div></a>
-						<div class="news-text-box">
-							<h3><a href="single-news.html">Inovasi Terbaru dalam Industri Beton Precast</a></h3>
-							<p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 10 Agustus, 2025</span>
-							</p>
-							<p class="excerpt">Mengenal teknologi terbaru dalam produksi beton precast yang lebih efisien dan berkualitas.</p>
-							<a href="single-news.html" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+					<div class="col-lg-4 col-md-6">
+						<div class="single-latest-news">
+							<a href="news.php"><div class="latest-news-bg news-bg-2"></div></a>
+							<div class="news-text-box">
+								<h3><a href="news.php">Inovasi Terbaru dalam Industri Beton Precast</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> Admin</span>
+									<span class="date"><i class="fas fa-calendar"></i> 10 Agustus, 2025</span>
+								</p>
+								<p class="excerpt">Mengenal teknologi terbaru dalam produksi beton precast yang lebih efisien dan berkualitas.</p>
+								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-3"></div></a>
-						<div class="news-text-box">
-							<h3><a href="single-news.html">Standar Kualitas Beton SNI untuk Konstruksi</a></h3>
-							<p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> 5 Agustus, 2025</span>
-							</p>
-							<p class="excerpt">Memahami standar kualitas beton menurut SNI dan pentingnya dalam konstruksi bangunan.</p>
-							<a href="single-news.html" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+					<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
+						<div class="single-latest-news">
+							<a href="news.php"><div class="latest-news-bg news-bg-3"></div></a>
+							<div class="news-text-box">
+								<h3><a href="news.php">Standar Kualitas Beton SNI untuk Konstruksi</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> Admin</span>
+									<span class="date"><i class="fas fa-calendar"></i> 5 Agustus, 2025</span>
+								</p>
+								<p class="excerpt">Memahami standar kualitas beton menurut SNI dan pentingnya dalam konstruksi bangunan.</p>
+								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
+				<?php endif; ?>
 			</div>
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<a href="news.html" class="boxed-btn">Berita Lainnya</a>
+					<a href="news.php" class="boxed-btn">Berita Lainnya</a>
 				</div>
 			</div>
 		</div>
@@ -536,10 +565,10 @@ try {
 						<h2 class="widget-title">Pages</h2>
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li><a href="about.html">About</a></li>
+							<li><a href="about.php">About</a></li>
 							<li><a href="shop.php">Shop</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="news.php">News</a></li>
+							<li><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
 				</div>

@@ -1,13 +1,29 @@
+<?php
+require_once 'includes/init.php';
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
+    $name = sanitizeInput($_POST['name']);
+    $email = sanitizeInput($_POST['email']);
+    $phone = sanitizeInput($_POST['phone']);
+    $subject = sanitizeInput($_POST['subject']);
+    $message = sanitizeInput($_POST['message']);
+    
+    // Here you would typically send email or save to database
+    // For now, we'll just set a success message
+    $success_message = "Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.";
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+	<meta name="description" content="Hubungi Turen Indah Bangunan - Toko Beton Terlengkap di Malang">
 
 	<!-- title -->
-	<title>Contact</title>
+	<title>Hubungi Kami | Turen Indah Bangunan</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -50,7 +66,7 @@
 					<div class="main-menu-wrap">
 						<!-- logo -->
 						<div class="site-logo">
-							<a href="index.html">
+							<a href="<?= BASE_URL ?>">
 								<img src="assets/img/logo1.png" alt="Logo" style="max-height: 70px; height: auto; width: auto;">
 							</a>
 						</div>
@@ -59,31 +75,31 @@
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li ><a href="index.html">Home</a>
+								<li><a href="index.php">Home</a>
 									<ul class="sub-menu">
-										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
+										<li><a href="index.php">Static Home</a></li>
+										<li><a href="index2.php">Slider Home</a></li>
 									</ul>
 								</li>
-								<li><a href="about.html">About</a></li>
-								<li ><a href="news.html">News</a>
+								<li><a href="about.php">About</a></li>
+								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
+										<li><a href="news.php">News</a></li>
+										<li><a href="single-news.php">Single News</a></li>
 									</ul>
 								</li>
-								<li class="current-list-item"><a href="contact.html">Contact</a></li>
-								<li><a href="shop.html">Shop</a>
+								<li class="current-list-item"><a href="contact.php">Contact</a></li>
+								<li><a href="shop.php">Shop</a>
 									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="single-product.html">Single Product</a></li>
-										<li><a href="cart.html">Cart</a></li>
+										<li><a href="shop.php">Shop</a></li>
+										<li><a href="checkout.php">Check Out</a></li>
+										<li><a href="single-product.php">Single Product</a></li>
+										<li><a href="cart.php">Cart</a></li>
 									</ul>
 								</li>
 								<li>
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 									</div>
 								</li>
@@ -124,8 +140,8 @@
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
-						<p>Get 24/7 Support</p>
-						<h1>Contact us</h1>
+						<p>Hubungi Kami 24/7</p>
+						<h1>Kontak Kami</h1>
 					</div>
 				</div>
 			</div>
@@ -139,33 +155,38 @@
 			<div class="row">
 				<div class="col-lg-8 mb-5 mb-lg-0">
 					<div class="form-title">
-						<h2>Have you any question?</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, ratione! Laboriosam est, assumenda. Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse natus!</p>
+						<h2>Ada pertanyaan untuk kami?</h2>
+						<p>Kami siap membantu Anda dengan konsultasi gratis seputar kebutuhan material bangunan dan beton. Tim ahli kami akan memberikan solusi terbaik untuk proyek konstruksi Anda.</p>
 					</div>
-				 	<div id="form_status"></div>
+					
+					<?php if (isset($success_message)): ?>
+						<div class="alert alert-success">
+							<?= $success_message ?>
+						</div>
+					<?php endif; ?>
+					
 					<div class="contact-form">
-						<form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+						<form method="POST" action="">
 							<p>
-								<input type="text" placeholder="Name" name="name" id="name">
-								<input type="email" placeholder="Email" name="email" id="email">
+								<input type="text" placeholder="Nama Lengkap" name="name" id="name" required>
+								<input type="email" placeholder="Email" name="email" id="email" required>
 							</p>
 							<p>
-								<input type="tel" placeholder="Phone" name="phone" id="phone">
-								<input type="text" placeholder="Subject" name="subject" id="subject">
+								<input type="tel" placeholder="Nomor Telepon" name="phone" id="phone" required>
+								<input type="text" placeholder="Subjek" name="subject" id="subject" required>
 							</p>
-							<p><textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea></p>
-							<input type="hidden" name="token" value="FsWga4&@f6aw" />
-							<p><input type="submit" value="Submit"></p>
+							<p><textarea name="message" id="message" cols="30" rows="10" placeholder="Pesan Anda" required></textarea></p>
+							<p><input type="submit" value="Kirim Pesan" class="boxed-btn"></p>
 						</form>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="contact-form-wrap">
 						<div class="contact-form-box">
-							<h4><i class="fas fa-address-book"></i> Contact</h4>
+							<h4><i class="fas fa-address-book"></i> Kontak</h4>
 							<p>
-								<strong>Phone:</strong><br>
-								<a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Saya+mendapat+informasi+dari+Wabsite%2C+ingin+lebih+tahu+tentang+informasi+harga+Produk+Yang+ada+di+Turen+Indah+Bangunan&type=phone_number&app_absent=0" onclick="showPhone('6281252462983')">+62 812-5246-2983</a>
+								<strong>Telepon:</strong><br>
+								<a href="tel:+6281252462983">+62 812-5246-2983</a>
 							</p>
 							<p>
 								<strong>Email:</strong><br>
@@ -173,8 +194,27 @@
 							</p>
 							<p>
 								<strong>Instagram:</strong><br>
-								<a href="https://www.instagram.com/turenindah.bangunan/6" onclick="showInstagram('turenindah.bangunan')">@turenindah.bangunan</a>
+								<a href="https://www.instagram.com/turenindah.bangunan/" target="_blank">@turenindah.bangunan</a>
 							</p>
+							<p>
+								<strong>Alamat:</strong><br>
+								Jl. Raya Turen, Malang<br>
+								Jawa Timur, Indonesia
+							</p>
+							<p>
+								<strong>Jam Operasional:</strong><br>
+								Senin - Sabtu: 08:00 - 16:00 WIB<br>
+								Minggu: Tutup
+							</p>
+						</div>
+						
+						<div class="contact-form-box mt-4">
+							<h4><i class="fab fa-whatsapp"></i> WhatsApp</h4>
+							<p>Untuk respon lebih cepat, hubungi kami langsung via WhatsApp:</p>
+							<a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20produk%20Turen%20Indah%20Bangunan" 
+							   class="boxed-btn" target="_blank">
+								<i class="fab fa-whatsapp"></i> Chat WhatsApp
+							</a>
 						</div>
 					</div>
 				</div>
@@ -188,7 +228,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<p> <i class="fas fa-map-marker-alt"></i> Find Our Location</p>
+					<p> <i class="fas fa-map-marker-alt"></i> Temukan Lokasi Kami</p>
 				</div>
 			</div>
 		</div>
@@ -197,10 +237,10 @@
 
 	<!-- google map section -->
 	<div class="embed-responsive embed-responsive-21by9">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26432.42324808999!2d-118.34398767954286!3d34.09378509738966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bf07045279bf%3A0xf67a9a6797bdfae4!2sHollywood%2C%20Los%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1576846473265!5m2!1sen!2sbd" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="embed-responsive-item"></iframe>
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63214.60147039406!2d112.66073957832032!3d-8.124036199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78be1234567890%3A0x1234567890abcdef!2sTuren%2C%20Malang%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1625123456789!5m2!1sid!2sid" 
+		        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="embed-responsive-item"></iframe>
 	</div>
 	<!-- end google map section -->
-
 
 	<!-- footer -->
 	<div class="footer-area">
@@ -209,16 +249,16 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box about-widget">
 						<h2 class="widget-title">About us</h2>
-						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+						<p>Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-box get-in-touch">
 						<h2 class="widget-title">Get in Touch</h2>
 						<ul>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/6" onclick="showInstagram()">@turenindah.bangunan</a></li>
+							<li><a href="https://www.instagram.com/turenindah.bangunan/">@turenindah.bangunan</a></li>
 							<li><a href="mailto:info@turenindahbangunan.com">info@turenindahbangunan.com</a></li>
-							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983&text=Saya+mendapat+informasi+dari+Wabsite%2C+ingin+lebih+tahu+tentang+informasi+harga+Produk+Yang+ada+di+Turen+Indah+Bangunan&type=phone_number&app_absent=0" onclick="showPhone()">+62 812-5246-2983</a></li>
+							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983">+62 812-5246-2983</a></li>
 						</ul>
 					</div>
 				</div>
@@ -226,11 +266,11 @@
 					<div class="footer-box pages">
 						<h2 class="widget-title">Pages</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="services.html">Shop</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="about.php">About</a></li>
+							<li><a href="shop.php">Shop</a></li>
+							<li><a href="news.php">News</a></li>
+							<li><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -238,8 +278,8 @@
 					<div class="footer-box subscribe">
 						<h2 class="widget-title">Subscribe</h2>
 						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.html">
-							<input type="email" placeholder="Email">
+						<form action="index.php" method="POST">
+							<input type="email" name="email" placeholder="Email" required>
 							<button type="submit"><i class="fas fa-paper-plane"></i></button>
 						</form>
 					</div>
@@ -254,8 +294,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-12">
-					<p> &copy; 2025 -Turen Indah Bangunan. <a href="">Semua hak cipta dilindungi.</a>| Toko Bangunan Terlengkap di Malang.<br>
-						Distributed By - <a href="">Thelord</a>
+					<p>&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br>
+						Distributed By - <a href="#">Thelord</a>
 					</p>
 				</div>
 				<div class="col-lg-6 text-right col-md-12">
@@ -263,7 +303,7 @@
 						<ul>
 							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
 							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
 						</ul>
@@ -292,8 +332,6 @@
 	<script src="assets/js/jquery.meanmenu.min.js"></script>
 	<!-- sticker js -->
 	<script src="assets/js/sticker.js"></script>
-	<!-- form validation js -->
-	<script src="assets/js/form-validate.js"></script>
 	<!-- main js -->
 	<script src="assets/js/main.js"></script>
 	

@@ -243,6 +243,25 @@ try {
 		.breadcrumb-custom .active {
 			color: #666;
 		}
+		
+		.tag-badge {
+			display: inline-block;
+			background: #F28123;
+			color: white;
+			padding: 4px 12px;
+			border-radius: 15px;
+			font-size: 12px;
+			font-weight: 500;
+			margin: 2px 4px 2px 0;
+			text-decoration: none;
+			transition: all 0.3s ease;
+		}
+		
+		.tag-badge:hover {
+			background: #e67112;
+			color: white;
+			transform: translateY(-1px);
+		}
 	</style>
 </head>
 <body>
@@ -278,25 +297,25 @@ try {
 										<li><a href="index_2.php">Slider Home</a></li>
 									</ul>
 								</li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="news.html">News</a>
+								<li><a href="about.php">About</a></li>
+								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
+										<li><a href="news.php">News</a></li>
+										<li><a href="single-news.php">Single News</a></li>
 									</ul>
 								</li>
-								<li><a href="contact.html">Contact</a></li>
+								<li><a href="contact.php">Contact</a></li>
 								<li class="current-list-item"><a href="shop.php">Shop</a>
 									<ul class="sub-menu">
 										<li><a href="shop.php">Shop</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
+										<li><a href="checkout.php">Check Out</a></li>
 										<li><a href="single-product.php">Single Product</a></li>
-										<li><a href="cart.html">Cart</a></li>
+										<li><a href="cart.php">Cart</a></li>
 									</ul>
 								</li>
 								<li>
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 									</div>
 								</li>
@@ -422,7 +441,7 @@ try {
 											$tags = explode(',', $produk['tags']);
 											foreach ($tags as $tag): 
 											?>
-												<span class="badge bg-secondary me-1"><?= trim(htmlspecialchars($tag)) ?></span>
+												<span class="tag-badge"><?= trim(htmlspecialchars($tag)) ?></span>
 											<?php endforeach; ?>
 										</span>
 									</div>
@@ -439,7 +458,7 @@ try {
 									<a href="tel:+6281252462983" class="contact-btn btn-call">
 										<i class="fas fa-phone"></i> Telepon Langsung
 									</a>
-									<a href="contact.html" class="contact-btn btn-outline-primary">
+									<a href="contact.php" class="contact-btn btn-outline-primary">
 										<i class="fas fa-envelope"></i> Kontak Kami
 									</a>
 								</div>
@@ -526,10 +545,10 @@ try {
 						<h2 class="widget-title">Pages</h2>
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li><a href="about.html">About</a></li>
+							<li><a href="about.php">About</a></li>
 							<li><a href="shop.php">Shop</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="news.php">News</a></li>
+							<li><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
 				</div>
