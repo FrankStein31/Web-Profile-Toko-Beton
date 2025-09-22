@@ -110,7 +110,7 @@ try {
 								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
 										<li><a href="news.php">News</a></li>
-										<li><a href="single-news.php">Single News</a></li>
+										<li><a href="404.php">Single News</a></li>
 									</ul>
 								</li>
 								<li><a href="contact.php">Contact</a></li>
@@ -161,27 +161,28 @@ try {
 	</div>
 	<!-- end search area -->
 
-	<!-- hero area -->
+	<!-- Hero Area -->
 	<div class="hero-area hero-bg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-9 offset-lg-2 text-center">
-					<div class="hero-text">
-						<div class="hero-text-tablecell">
-							<p class="subtitle">TUREN INDAH BANGUNAN</p>
-							<h1>MULAI KONSTRUKSI ANDA DENGAN BETON BERKUALITAS</h1>
-							<h3>Industri Material Bangunan dan Beton berkualitas tinggi dan terpercaya siap untuk berbagai kebutuhan konstruksi</h3>
-							<div class="hero-btns">
-								<a href="shop.php" class="boxed-btn">Lihat Produk</a>
-								<a href="contact.php" class="bordered-btn">Hubungi Kami</a>
-							</div>
-						</div>
-					</div>
+	<div class="container">
+		<div class="row">
+		<div class="col-lg-9 offset-lg-2 text-center">
+			<div class="hero-text">
+			<div class="hero-text-tablecell">
+				<p class="subtitle">TUREN INDAH BANGUNAN</p>
+				<h1>MULAI KONSTRUKSI ANDA DENGAN BETON BERKUALITAS</h1>
+				<h3>Industri Material Bangunan dan Beton berkualitas tinggi dan terpercaya siap untuk berbagai kebutuhan konstruksi</h3>
+				<div class="hero-btns">
+				<a href="shop.php" class="boxed-btn">Lihat Produk</a>
+				<a href="contact.php" class="bordered-btn">Hubungi Kami</a>
 				</div>
 			</div>
+			</div>
+		</div>
 		</div>
 	</div>
-	<!-- end hero area -->
+	</div>
+	<!-- End Hero Area -->
+
 
 	<!-- features list section -->
 	<div class="list-section pt-80 pb-80">
@@ -313,11 +314,11 @@ try {
                     	<div class="price-box">
                         	<div class="inner-price">
                                 <span class="price">
-                                    <strong>30%</strong> <br> diskon
+                                    <strong>30%</strong> <br> diskon	
                                 </span>
                             </div>
                         </div>
-                    	<img src="assets/img/hero-bg-4.jpg" alt="">
+                    	<img src="assets/img/2.jpg" alt="">
                     </div>
                 </div>
                 <!--Content Column-->
@@ -347,7 +348,7 @@ try {
 								<img src="assets/img/avaters/avatar1.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Budi Santoso <span>Kontraktor</span></h3>
+								<h3> Sari Dewi <span>Kontraktor</span></h3>
 								<p class="testimonial-body">
 									"Kualitas beton dari Turen Indah Bangunan sangat memuaskan. Pengiriman selalu tepat waktu dan sesuai spesifikasi proyek. Sangat recommended untuk kebutuhan konstruksi."
 								</p>
@@ -361,7 +362,7 @@ try {
 								<img src="assets/img/avaters/avatar2.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Sari Dewi <span>Developer</span></h3>
+								<h3> Budi Santoso <span>Developer</span></h3>
 								<p class="testimonial-body">
 									"Pelayanan yang sangat profesional dan produk berkualitas tinggi. Tim Turen Indah Bangunan selalu siap membantu dan memberikan solusi terbaik untuk proyek kami."
 								</p>
@@ -397,7 +398,6 @@ try {
 			<div class="row">
 				<div class="col-lg-6 col-md-12">
 					<div class="abt-bg">
-						<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="video-play-btn popup-youtube"><i class="fas fa-play"></i></a>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-12">
@@ -413,204 +413,49 @@ try {
 		</div>
 	</div>
 	<!-- end advertisement section -->
-	
-	<!-- shop banner -->
-	<section class="shop-banner">
-    	<div class="container">
-        	<h3>Promo Akhir Tahun! <br> dengan <span class="orange-text">Diskon Besar...</span></h3>
-            <div class="sale-percent"><span>Diskon! <br> Hingga</span>25% <span>off</span></div>
-            <a href="shop.php" class="cart-btn btn-lg">Belanja Sekarang</a>
+<!-- logo carousel -->
+<div class="logo-carousel-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="logo-carousel-inner">
+
+          <div class="single-logo-item">
+            <a href="http://perumahandimalang.com" target="_blank" rel="noopener"
+               aria-label="Turen Indah Property">
+              <img src="assets/img/company-logos/18.png" alt="Turen Indah Property">
+            </a>
+          </div>
+
+          <div class="single-logo-item">
+            <a href="https://oceangardenresto.com/" target="_blank" rel="noopener"
+               aria-label="Ocean Garden">
+              <img src="assets/img/company-logos/16.png" alt="Ocean Garden">
+            </a>
+          </div>
+
+          <div class="single-logo-item">
+            <a href="https://www.turenindahbangunan.com/" target="_blank" rel="noopener"
+               aria-label="TiB">
+              <img src="assets/img/company-logos/17.png" alt="TiB">
+            </a>
+          </div>
+
+          <div class="single-logo-item">
+            <a href="https://monogram.example.com" target="_blank" rel="noopener"
+               aria-label="Monogram M">
+              <img src="assets/img/company-logos/15.png" alt="Beton">
+            </a>
+          </div>
+
         </div>
-    </section>
-	<!-- end shop banner -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end logo carousel -->
 
-	<!-- latest news -->
-	<div class="latest-news pt-150 pb-150">
-		<div class="container">
-
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="section-title">	
-						<h3><span class="orange-text">Berita</span> Terbaru</h3>
-						<p>Informasi terkini seputar konstruksi, tips bangunan, dan update produk dari Turen Indah Bangunan</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<?php if (!empty($latestNews)): ?>
-					<?php foreach ($latestNews as $index => $news): ?>
-						<div class="col-lg-4 col-md-6">
-							<div class="single-latest-news">
-								<a href="single-news.php?slug=<?= $news['slug'] ?>">
-									<div class="latest-news-bg" style="background-image: url('<?= $news['gambar'] ? BERITA_IMG_URL . $news['gambar'] : 'assets/img/latest-news/news-bg-' . (($index % 3) + 1) . '.jpg' ?>'); background-size: cover; background-position: center; height: 300px; border-radius: 10px;"></div>
-								</a>
-								<div class="news-text-box">
-									<h3><a href="single-news.php?slug=<?= $news['slug'] ?>"><?= htmlspecialchars($news['judul']) ?></a></h3>
-									<p class="blog-meta">
-										<span class="author"><i class="fas fa-user"></i> Admin</span>
-										<span class="date"><i class="fas fa-calendar"></i> <?= $news['tanggal_format'] ?></span>
-									</p>
-									<p class="excerpt"><?= htmlspecialchars(substr($news['deskripsi'], 0, 120)) ?><?= strlen($news['deskripsi']) > 120 ? '...' : '' ?></p>
-									<a href="single-news.php?slug=<?= $news['slug'] ?>" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
-								</div>
-							</div>
-						</div>
-					<?php endforeach; ?>
-				<?php else: ?>
-					<!-- Fallback content when no news available -->
-					<div class="col-lg-4 col-md-6">
-						<div class="single-latest-news">
-							<a href="news.php"><div class="latest-news-bg news-bg-1"></div></a>
-							<div class="news-text-box">
-								<h3><a href="news.php">Tips Memilih Beton Ready Mix yang Berkualitas</a></h3>
-								<p class="blog-meta">
-									<span class="author"><i class="fas fa-user"></i> Admin</span>
-									<span class="date"><i class="fas fa-calendar"></i> 15 Agustus, 2025</span>
-								</p>
-								<p class="excerpt">Panduan lengkap memilih beton ready mix yang sesuai dengan kebutuhan proyek konstruksi Anda.</p>
-								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-latest-news">
-							<a href="news.php"><div class="latest-news-bg news-bg-2"></div></a>
-							<div class="news-text-box">
-								<h3><a href="news.php">Inovasi Terbaru dalam Industri Beton Precast</a></h3>
-								<p class="blog-meta">
-									<span class="author"><i class="fas fa-user"></i> Admin</span>
-									<span class="date"><i class="fas fa-calendar"></i> 10 Agustus, 2025</span>
-								</p>
-								<p class="excerpt">Mengenal teknologi terbaru dalam produksi beton precast yang lebih efisien dan berkualitas.</p>
-								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-						<div class="single-latest-news">
-							<a href="news.php"><div class="latest-news-bg news-bg-3"></div></a>
-							<div class="news-text-box">
-								<h3><a href="news.php">Standar Kualitas Beton SNI untuk Konstruksi</a></h3>
-								<p class="blog-meta">
-									<span class="author"><i class="fas fa-user"></i> Admin</span>
-									<span class="date"><i class="fas fa-calendar"></i> 5 Agustus, 2025</span>
-								</p>
-								<p class="excerpt">Memahami standar kualitas beton menurut SNI dan pentingnya dalam konstruksi bangunan.</p>
-								<a href="news.php" class="read-more-btn">baca selengkapnya <i class="fas fa-angle-right"></i></a>
-							</div>
-						</div>
-					</div>
-				<?php endif; ?>
-			</div>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<a href="news.php" class="boxed-btn">Berita Lainnya</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end latest news -->
-
-	<!-- logo carousel -->
-	<div class="logo-carousel-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="logo-carousel-inner">
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/1.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/2.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/3.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/4.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/5.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end logo carousel -->
-
-	<!-- footer -->
-	<div class="footer-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box about-widget">
-						<h2 class="widget-title">About us</h2>
-						<p>Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box get-in-touch">
-						<h2 class="widget-title">Get in Touch</h2>
-						<ul>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/">@turenindah.bangunan</a></li>
-							<li><a href="mailto:info@turenindahbangunan.com">info@turenindahbangunan.com</a></li>
-							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983">+62 812-5246-2983</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box pages">
-						<h2 class="widget-title">Pages</h2>
-						<ul>
-							<li><a href="index.php">Home</a></li>
-							<li><a href="about.php">About</a></li>
-							<li><a href="shop.php">Shop</a></li>
-							<li><a href="news.php">News</a></li>
-							<li><a href="contact.php">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box subscribe">
-						<h2 class="widget-title">Subscribe</h2>
-						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.php" method="POST">
-							<input type="email" name="email" placeholder="Email" required>
-							<button type="submit"><i class="fas fa-paper-plane"></i></button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end footer -->
-	
-	<!-- copyright -->
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-12">
-					<p>&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br>
-						Distributed By - <a href="#">Thelord</a>
-					</p>
-				</div>
-				<div class="col-lg-6 text-right col-md-12">
-					<div class="social-icons">
-						<ul>
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end copyright -->
+<?php include 'includes/footer.php'; ?>
 	
 	<!-- jquery -->
 	<script src="assets/js/jquery-1.11.3.min.js"></script>

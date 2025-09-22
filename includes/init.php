@@ -24,6 +24,8 @@ $kategoriModel = new Kategori($database);
 $produkModel = new Produk($database);
 $adminModel = new Admin($database);
 $beritaModel = new BeritaModel($database);
+$aboutModel = new AboutModel($database);
+$footerModel = new FooterModel($database);
 
 // Set error handling
 set_error_handler(function($severity, $message, $file, $line) {

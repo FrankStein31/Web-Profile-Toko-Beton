@@ -1,5 +1,20 @@
 <?php
 require_once 'includes/init.php';
+
+// Get about content from database
+try {
+    $aboutContents = $aboutModel->getActiveContent();
+    
+    // Organize content by section for easier access
+    $sections = [];
+    foreach ($aboutContents as $content) {
+        $sections[$content['section_name']] = $content;
+    }
+} catch (Exception $e) {
+    $aboutContents = [];
+    $sections = [];
+    error_log("Error loading about content: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -33,6 +48,96 @@ require_once 'includes/init.php';
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- responsive -->
 	<link rel="stylesheet" href="assets/css/responsive.css">
+
+	<style>
+		/* Custom About Page Styles */
+		.about-section {
+			padding: 60px 0;
+		}
+		
+		.about-section:nth-child(even) {
+			background-color: #f8f9fa;
+		}
+		
+		.about-content {
+			text-align: left;
+			line-height: 1.8;
+		}
+		
+		.about-content h4 {
+			color: #2c3e50;
+			margin-top: 2rem;
+			margin-bottom: 1rem;
+			font-weight: 600;
+		}
+		
+		.about-content h5 {
+			color: #F28123;
+			margin-bottom: 0.75rem;
+			font-weight: 600;
+		}
+		
+		.about-content p {
+			margin-bottom: 1.5rem;
+			color: #666;
+			font-size: 16px;
+		}
+		
+		.about-content ul {
+			padding-left: 1.5rem;
+			margin-bottom: 1.5rem;
+		}
+		
+		.about-content li {
+			margin-bottom: 0.5rem;
+			color: #666;
+			line-height: 1.6;
+		}
+		
+		.about-image img {
+			transition: transform 0.3s ease;
+			border-radius: 15px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		}
+		
+		.about-image img:hover {
+			transform: translateY(-5px);
+		}
+		
+		.feature-item {
+			padding: 1.5rem;
+			background: white;
+			border-radius: 10px;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+			transition: all 0.3s ease;
+			height: 100%;
+		}
+		
+		.feature-item:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+		}
+		
+		.feature-item h5 {
+			margin-bottom: 1rem;
+		}
+		
+		.feature-item i {
+			margin-right: 0.5rem;
+		}
+		
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+			.about-content {
+				text-align: center;
+				margin-bottom: 2rem;
+			}
+			
+			.about-image {
+				margin-bottom: 2rem;
+			}
+		}
+	</style>
 
 </head>
 <body>
@@ -72,7 +177,7 @@ require_once 'includes/init.php';
 								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
 										<li><a href="news.php">News</a></li>
-										<li><a href="single-news.php">Single News</a></li>
+										<li><a href="404.php">Single News</a></li>
 									</ul>
 								</li>
 								<li><a href="contact.php">Contact</a></li>
@@ -80,7 +185,7 @@ require_once 'includes/init.php';
 									<ul class="sub-menu">
 										<li><a href="shop.php">Shop</a></li>
 										<li><a href="checkout.php">Check Out</a></li>
-										<li><a href="single-product.php">Single Product</a></li>
+										<li><a href="404.php">Single Product</a></li>
 										<li><a href="cart.php">Cart</a></li>
 									</ul>
 								</li>
@@ -136,65 +241,91 @@ require_once 'includes/init.php';
 	</div>
 	<!-- end breadcrumb section -->
 
-	<!-- featured section -->
-	<div class="feature-bg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-7">
-					<div class="featured-text">
-						<h2 class="pb-3">Mengapa <span class="orange-text">Turen Indah Bangunan</span></h2>
-						<div class="row">
-							<div class="col-lg-6 col-md-6 mb-4 mb-md-5">
-								<div class="list-box d-flex">
-									<div class="list-icon">
-										<i class="fas fa-certificate"></i>
+	<!-- Dynamic About Content from Database -->
+	<?php if (!empty($aboutContents)): ?>
+		<?php foreach ($aboutContents as $index => $content): ?>
+			<section class="about-section <?= $index % 2 == 0 ? '' : 'bg-light' ?>">
+				<div class="container">
+					<div class="row align-items-center">
+						<!-- Content Section -->
+						<div class="col-lg-<?= !empty($content['image']) ? '8' : '12' ?> <?= $index % 2 == 1 && !empty($content['image']) ? 'order-lg-2' : '' ?>">
+							<div class="featured-text">
+								<?php if (!empty($content['subtitle'])): ?>
+									<p class="top-sub text-center"><?= htmlspecialchars($content['subtitle']) ?></p>
+								<?php endif; ?>
+								
+								<?php if (!empty($content['title'])): ?>
+									<h2 class="pb-3 text-center"><?= htmlspecialchars($content['title']) ?></h2>
+								<?php endif; ?>
+								
+								<?php if (!empty($content['content'])): ?>
+									<div class="about-content">
+										<?= $content['content'] ?>
 									</div>
-									<div class="content">
-										<h3>Kualitas Terjamin</h3>
-										<p>Produk beton berkualitas tinggi sesuai standar SNI dengan sertifikat mutu terpercaya.</p>
-									</div>
+								<?php endif; ?>
+							</div>
+						</div>
+						
+						<!-- Image Section (only if image exists) -->
+						<?php if (!empty($content['image'])): ?>
+							<div class="col-lg-4 <?= $index % 2 == 1 ? 'order-lg-1' : '' ?>">
+								<div class="about-image text-center">
+									<img src="<?= BASE_URL ?>assets/img/uploads/about/<?= $content['image'] ?>" 
+									     alt="<?= htmlspecialchars($content['title']) ?>" 
+									     class="img-fluid"
+									     style="max-height: 400px; object-fit: cover; width: 100%;">
 								</div>
 							</div>
-							<div class="col-lg-6 col-md-6 mb-5 mb-md-5">
-								<div class="list-box d-flex">
-									<div class="list-icon">
-										<i class="fas fa-shipping-fast"></i>
-									</div>
-									<div class="content">
-										<h3>Pengiriman Cepat</h3>
-										<p>Layanan pengiriman tepat waktu ke seluruh wilayah Malang dan sekitarnya.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 mb-5 mb-md-5">
-								<div class="list-box d-flex">
-									<div class="list-icon">
-										<i class="fas fa-users"></i>
-									</div>
-									<div class="content">
-										<h3>Tim Berpengalaman</h3>
-										<p>Didukung tim profesional berpengalaman puluhan tahun di bidang konstruksi.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6">
-								<div class="list-box d-flex">
-									<div class="list-icon">
-										<i class="fas fa-handshake"></i>
-									</div>
-									<div class="content">
-										<h3>Pelayanan Terbaik</h3>
-										<p>Konsultasi gratis dan pelayanan prima untuk setiap kebutuhan proyek Anda.</p>
-									</div>
-								</div>
-							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</section>
+		<?php endforeach; ?>
+	<?php else: ?>
+		<!-- Fallback content if no database content -->
+		<section class="about-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="text-center mb-5">
+							<p class="top-sub">Sejak Tahun 1999</p>
+							<h2 class="pb-3">Mengapa <span class="orange-text">Turen Indah Bangunan</span></h2>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-md-6 mb-4">
+						<div class="feature-item">
+							<h5><i class="fas fa-certificate text-primary"></i> Kualitas Terjamin</h5>
+							<p>Produk beton berkualitas tinggi sesuai standar SNI dengan sertifikat mutu terpercaya.</p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 mb-4">
+						<div class="feature-item">
+							<h5><i class="fas fa-shipping-fast text-primary"></i> Pengiriman Cepat</h5>
+							<p>Layanan pengiriman tepat waktu ke seluruh wilayah Malang dan sekitarnya.</p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 mb-4">
+						<div class="feature-item">
+							<h5><i class="fas fa-users text-primary"></i> Tim Berpengalaman</h5>
+							<p>Didukung tim profesional berpengalaman puluhan tahun di bidang konstruksi.</p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 mb-4">
+						<div class="feature-item">
+							<h5><i class="fas fa-handshake text-primary"></i> Pelayanan Terbaik</h5>
+							<p>Konsultasi gratis dan pelayanan prima untuk setiap kebutuhan proyek Anda.</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- end featured section -->
+		</section>
+	<?php endif; ?>
+	<!-- End Dynamic About Content -->
+
+
+
 
 	<!-- shop banner -->
 	<section class="shop-banner">
@@ -206,55 +337,6 @@ require_once 'includes/init.php';
     </section>
 	<!-- end shop banner -->
 
-	<!-- team section -->
-	<div class="mt-150">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="section-title">
-						<h3>Tim <span class="orange-text">Kami</span></h3>
-						<p>Tim profesional yang siap melayani kebutuhan konstruksi dan material bangunan Anda dengan pengalaman terbaik.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 col-md-6">
-					<div class="single-team-item">
-						<div class="team-bg team-bg-1"></div>
-						<h4>Budi Santoso <span>Manager</span></h4>
-						<ul class="social-link-team">
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-team-item">
-						<div class="team-bg team-bg-2"></div>
-						<h4>Sari Dewi <span>Sales Manager</span></h4>
-						<ul class="social-link-team">
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-					<div class="single-team-item">
-						<div class="team-bg team-bg-3"></div>
-						<h4>Ahmad Rizki <span>Technical Expert</span></h4>
-						<ul class="social-link-team">
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end team section -->
 
 	<!-- testimonail-section -->
 	<div class="testimonail-section mt-80 mb-150">
@@ -267,7 +349,7 @@ require_once 'includes/init.php';
 								<img src="assets/img/avaters/avatar1.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Budi Santoso <span>Kontraktor</span></h3>
+								<h3>Sari Dewi<span>Kontraktor</span></h3>
 								<p class="testimonial-body">
 									"Kualitas beton dari Turen Indah Bangunan sangat memuaskan. Pengiriman selalu tepat waktu dan sesuai spesifikasi proyek. Sangat recommended untuk kebutuhan konstruksi."
 								</p>
@@ -281,7 +363,7 @@ require_once 'includes/init.php';
 								<img src="assets/img/avaters/avatar2.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3>Sari Dewi <span>Developer</span></h3>
+								<h3>Budi Santoso <span>Developer</span></h3>
 								<p class="testimonial-body">
 									"Pelayanan yang sangat profesional dan produk berkualitas tinggi. Tim Turen Indah Bangunan selalu siap membantu dan memberikan solusi terbaik untuk proyek kami."
 								</p>
@@ -312,104 +394,48 @@ require_once 'includes/init.php';
 	<!-- end testimonail-section -->
 
 	<!-- logo carousel -->
-	<div class="logo-carousel-section">
+		<div class="logo-carousel-section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12">
-					<div class="logo-carousel-inner">
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/1.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/2.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/3.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/4.png" alt="">
-						</div>
-						<div class="single-logo-item">
-							<img src="assets/img/company-logos/5.png" alt="">
-						</div>
-					</div>
+			<div class="col-lg-12">
+				<div class="logo-carousel-inner">
+
+				<div class="single-logo-item">
+					<a href="http://perumahandimalang.com" target="_blank" rel="noopener"
+					aria-label="Turen Indah Property">
+					<img src="assets/img/company-logos/18.png" alt="Turen Indah Property">
+					</a>
+				</div>
+
+				<div class="single-logo-item">
+					<a href="https://oceangardenresto.com/" target="_blank" rel="noopener"
+					aria-label="Ocean Garden">
+					<img src="assets/img/company-logos/16.png" alt="Ocean Garden">
+					</a>
+				</div>
+
+				<div class="single-logo-item">
+					<a href="https://www.turenindahbangunan.com/" target="_blank" rel="noopener"
+					aria-label="TiB">
+					<img src="assets/img/company-logos/17.png" alt="TiB">
+					</a>
+				</div>
+
+				<div class="single-logo-item">
+					<a href="https://monogram.example.com" target="_blank" rel="noopener"
+					aria-label="Monogram M">
+					<img src="assets/img/company-logos/15.png" alt="Beton">
+					</a>
+				</div>
+
 				</div>
 			</div>
+			</div>
 		</div>
-	</div>
+		</div>
 	<!-- end logo carousel -->
 
-	<!-- footer -->
-	<div class="footer-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box about-widget">
-						<h2 class="widget-title">About us</h2>
-						<p>Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box get-in-touch">
-						<h2 class="widget-title">Get in Touch</h2>
-						<ul>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/">@turenindah.bangunan</a></li>
-							<li><a href="mailto:info@turenindahbangunan.com">info@turenindahbangunan.com</a></li>
-							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983">+62 812-5246-2983</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box pages">
-						<h2 class="widget-title">Pages</h2>
-						<ul>
-							<li><a href="index.php">Home</a></li>
-							<li><a href="about.php">About</a></li>
-							<li><a href="shop.php">Shop</a></li>
-							<li><a href="news.php">News</a></li>
-							<li><a href="contact.php">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box subscribe">
-						<h2 class="widget-title">Subscribe</h2>
-						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.php" method="POST">
-							<input type="email" name="email" placeholder="Email" required>
-							<button type="submit"><i class="fas fa-paper-plane"></i></button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end footer -->
-	
-	<!-- copyright -->
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-12">
-					<p>&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br>
-						Distributed By - <a href="#">Thelord</a>
-					</p>
-				</div>
-				<div class="col-lg-6 text-right col-md-12">
-					<div class="social-icons">
-						<ul>
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end copyright -->
+<?php include 'includes/footer.php'; ?>
 	
 	<!-- jquery -->
 	<script src="assets/js/jquery-1.11.3.min.js"></script>

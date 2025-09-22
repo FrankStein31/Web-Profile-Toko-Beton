@@ -307,6 +307,7 @@ include 'includes/header.php';
                                     <option value="kg" <?= ($produk['satuan'] ?? '') === 'kg' ? 'selected' : '' ?>>Kg</option>
                                     <option value="sak" <?= ($produk['satuan'] ?? '') === 'sak' ? 'selected' : '' ?>>Sak</option>
                                     <option value="unit" <?= ($produk['satuan'] ?? '') === 'unit' ? 'selected' : '' ?>>Unit</option>
+                                    <option value="lanjar" <?= ($produk['satuan'] ?? '') === 'lanjar' ? 'selected' : '' ?>>lanjar</option>
                                 </select>
                             </div>
                         </div>

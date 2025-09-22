@@ -846,10 +846,28 @@ a.mobile-show {
 # Footer Styles
 
 ----------------------------------------------------------------------------- */
+/* Logo size — konsisten & responsif */
 .single-logo-item img {
-  max-width: 180px;
+  max-height: 110px;   /* desktop ideal 80–120px */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
   margin: 0 auto;
 }
+
+@media (max-width: 768px) {
+  .single-logo-item img {
+    max-height: 72px;  /* mobile 56–80px */
+  }
+}
+
+/* (Opsional) rapikan ruang section supaya tidak terlalu tinggi */
+.logo-carousel-section {
+  background-color: #f5f5f5;
+  padding: 30px 0;     /* semula 50px */
+}
+
 
 .logo-carousel-section {
   background-color: #f5f5f5;
@@ -984,6 +1002,40 @@ h2.widget-title:after {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   color: #F28123;
+}
+
+.single-logo-item {
+  height: 80px;                /* atur sesuai selera (64–96px) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-logo-item a {
+  display: flex;               /* bikin seluruh area logo bisa diklik */
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.single-logo-item img {
+  height: 80px !important;     /* kunci tinggi; seragam */
+  width: auto !important;
+  object-fit: contain;
+}
+
+/* responsif */
+@media (max-width: 768px) {
+  .single-logo-item { height: 64px; }
+  .single-logo-item img { height: 64px !important; }
+}
+
+/* opsional: sedikit feedback saat hover/fokus */
+.single-logo-item a:hover,
+.single-logo-item a:focus {
+  transform: scale(1.03);
+  transition: transform .15s ease;
+  outline: none;
 }
 
 /* -----------------------------------------------------------------------------
@@ -1357,10 +1409,13 @@ a.mobile-show.search-bar-icon:hover {
 ----------------------------------------------------------------------------- */
 .hero-bg {
   background-image: url(../img/image.png);
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-size: contain;       /* tampil utuh */
+  background-position: center center;
+  background-repeat: no-repeat;   /* jangan tile */
+  background-attachment: fixed;   /* opsional */
+  background-color: #f4b400;      /* isi ruang kosong */
 }
+
 
 .hero-text {
   display: table;
@@ -1390,11 +1445,17 @@ html, body {
   content: "";
   background-color: #07212e;
   z-index: -1;
-  opacity: 0.6;
+  opacity: 0.3;
+}
+.hero-area {
+  min-height: 100vh;       /* penuh layar */
+  display: flex;
+  align-items: center;
 }
 
+
 .hero-text p.subtitle {
-  color: #F28123;
+  color: #000000;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 7px;
@@ -1462,19 +1523,56 @@ input[type="submit"] {
   border-radius: 3px;
 }
 
+/* ==== Gambar Full Utuh di Semua Slide ==== */
 .homepage-bg-1 {
-  background-image: url(../img/hero-bg.jpg);
+  background-image: url(../img/image.png); /* ganti jika tiap slide beda gambar */
+  background-size: contain;       /* tampilkan gambar utuh */
+  background-position: center center;
+  background-repeat: no-repeat;   /* jangan tile */
+  background-color: #f4b400;      /* warna pengisi area kosong */
 }
-
 .homepage-bg-2 {
-  background-image: url(../img/hero-bg-2.jpg);
+  background-image: url(../img/image.png); /* ganti jika tiap slide beda gambar */
+  background-size: contain;       /* tampilkan gambar utuh */
+  background-position: center center;
+  background-repeat: no-repeat;   /* jangan tile */
+  background-color: #f4b400;      /* warna pengisi area kosong */
 }
-
 .homepage-bg-3 {
-  background-image: url(../img/hero-bg-3.jpg);
+  background-image: url(../img/image.png); /* ganti jika tiap slide beda gambar */
+  background-size: contain;       /* tampilkan gambar utuh */
+  background-position: center center;
+  background-repeat: no-repeat;   /* jangan tile */
+  background-color: #f4b400;      /* warna pengisi area kosong */
 }
 
+/* Setiap slide utama */
+.single-homepage-slider {
+  background-size: contain;       /* was: cover */
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #f4b400;      /* fallback background */
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;              /* penuh 1 layar */
+}
+
+/* Overlay gelap */
+.single-homepage-slider:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #051922;
+  content: "";
+  z-index: -1;
+  opacity: 0.7;
+}
+
+/* Struktur slider */
 .homepage-slider {
+  position: relative;
   height: 100%;
 }
 
@@ -1497,35 +1595,12 @@ input[type="submit"] {
   height: auto;
 }
 
-.single-homepage-slider {
-  background-size: cover;
-  background-position: center;
-  background-color: #020C0E;
-  position: relative;
-  z-index: 1;
-}
-
-.single-homepage-slider:after {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #051922;
-  content: "";
-  z-index: -1;
-  opacity: 0.7;
-}
-
+/* Navigasi slider */
 div.owl-controls, .owl-controls div {
   height: auto;
   top: 50%;
   color: #F28123;
   font-size: 48px;
-}
-
-.homepage-slider {
-  position: relative;
 }
 
 .owl-prev {
@@ -1539,6 +1614,14 @@ div.owl-controls, .owl-controls div {
   right: 60px;
   margin-top: -30px;
 }
+
+/* Teks deskripsi di hero */
+.hero-text h3 {
+  color: #fff;
+  text-align: center;
+  font-weight: 500;
+}
+
 
 /* -----------------------------------------------------------------------------
 
@@ -1577,6 +1660,46 @@ div.owl-controls, .owl-controls div {
   line-height: 60px;
   border: 2px #F28123 dotted;
   border-radius: 999px;
+}
+
+/* === Samakan tampilan hero & slider: foto utuh === */
+
+/* 1) Semua slide pakai contain + center + no-repeat */
+.homepage-bg-1,
+.homepage-bg-2,
+.homepage-bg-3,
+.single-homepage-slider {
+  background-size: contain !important;     /* utuh, tidak terpotong */
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-color: #f4b400;               /* isi area kosong; bebas ganti */
+}
+
+/* 2) Tinggi penuh 1 layar untuk slide */
+.homepage-slider,
+.single-homepage-slider { 
+  min-height: 100vh; 
+}
+
+/* 3) Pastikan isi slider ikut penuh tingginya */
+.single-homepage-slider > .container,
+.single-homepage-slider > .container > .row,
+.single-homepage-slider .hero-text,
+.single-homepage-slider .hero-text-tablecell {
+  height: 100%;
+}
+
+/* 4) Samakan overlay agar tidak terlalu gelap */
+.hero-area:after,
+.single-homepage-slider:after {
+  opacity: 0.3 !important;   /* dulu slider 0.7, bikin gelap */
+  z-index: 0;
+}
+.hero-text { position: relative; z-index: 1; } /* teks di atas overlay */
+
+/* (Opsional) Kalau di mobile background-attachment bikin glitch */
+@media (max-width: 768px) {
+  .hero-bg { background-attachment: scroll; }
 }
 
 /* -----------------------------------------------------------------------------
@@ -2061,7 +2184,7 @@ a.video-play-btn {
 }
 
 .abt-bg {
-  background-image: url(../img/abt.jpg);
+  background-image: url(../img/12.jpg);
   height: 100%;
   width: 100%;
   background-size: cover;
@@ -2080,7 +2203,7 @@ a.video-play-btn {
   width: 100%;
   height: 100%;
   content: "";
-  background-color: #051922;
+  background-color: #efefef;
   opacity: 0.3;
 }
 
@@ -2103,6 +2226,7 @@ a.video-play-btn {
 .abt-text p:last-child {
   margin-bottom: 0;
 }
+
 
 /* -----------------------------------------------------------------------------
 
@@ -2153,7 +2277,7 @@ a.video-play-btn {
 }
 
 .feature-bg:after {
-  background-image: url(../img/feature-bg.jpg);
+  background-image: url(../img/12.jpg);
   position: absolute;
   right: 0;
   top: 0;

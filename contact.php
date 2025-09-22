@@ -1,19 +1,63 @@
 <?php
 require_once 'includes/init.php';
 
+// KONFIGURASI EMAIL TUJUAN & PENGIRIM (SESUAIKAN)
+$toEmail   = 'geri@gmail.com';     // email penerima
+$fromEmail = 'hiyosinomi.com';  // gunakan domain sendiri (anti-SPF/DMARC gagal)
+$fromName  = 'Turen Indah Bangunan';
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
-    $name = sanitizeInput($_POST['name']);
-    $email = sanitizeInput($_POST['email']);
-    $phone = sanitizeInput($_POST['phone']);
-    $subject = sanitizeInput($_POST['subject']);
-    $message = sanitizeInput($_POST['message']);
-    
-    // Here you would typically send email or save to database
-    // For now, we'll just set a success message
-    $success_message = "Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.";
+    // 1) Ambil & sanitasi
+    $name    = sanitizeInput($_POST['name'] ?? '');
+    $email   = sanitizeInput($_POST['email'] ?? '');
+    $phone   = sanitizeInput($_POST['phone'] ?? '');
+    $subject = sanitizeInput($_POST['subject'] ?? '');
+    $message = sanitizeInput($_POST['message'] ?? '');
+
+    // 2) Validasi sederhana
+    $errors = [];
+    if ($name === '')   { $errors[] = 'Nama wajib diisi.'; }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { $errors[] = 'Email tidak valid.'; }
+    if ($phone === '')  { $errors[] = 'Nomor telepon wajib diisi.'; }
+    if ($subject === ''){ $errors[] = 'Subjek wajib diisi.'; }
+    if ($message === ''){ $errors[] = 'Pesan wajib diisi.'; }
+
+    if (empty($errors)) {
+        // 3) Siapkan subjek & body
+        $mailSubject = 'Pesan Kontak: ' . $subject;
+
+        $mailBody  = "Anda menerima pesan baru dari formulir kontak.\n\n";
+        $mailBody .= "Nama   : {$name}\n";
+        $mailBody .= "Email  : {$email}\n";
+        $mailBody .= "Telepon: {$phone}\n";
+        $mailBody .= "Subjek : {$subject}\n";
+        $mailBody .= "----------------------------------------\n";
+        $mailBody .= "{$message}\n";
+
+        // 4) Header email
+        $headers  = "From: {$fromName} <{$fromEmail}>\r\n";
+        $headers .= "Reply-To: {$name} <{$email}>\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        // (Opsional) tambahkan Return-Path kalau server mengizinkan:
+        // $headers .= "Return-Path: {$fromEmail}\r\n";
+
+        // 5) Kirim
+        if (@mail($toEmail, $mailSubject, $mailBody, $headers)) {
+            $success_message = "Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.";
+            // Opsional: kosongkan field setelah sukses
+            $_POST = [];
+        } else {
+            $success_message = "Gagal mengirim pesan. Mohon coba lagi atau hubungi kami via WhatsApp.";
+        }
+    } else {
+        // Tampilkan error singkat (opsional, atau bisa dirangkai lebih rapi di HTML)
+        $success_message = implode(' ', $errors);
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -85,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
 								<li><a href="news.php">News</a>
 									<ul class="sub-menu">
 										<li><a href="news.php">News</a></li>
-										<li><a href="single-news.php">Single News</a></li>
+										<li><a href="404.php">Single News</a></li>
 									</ul>
 								</li>
 								<li class="current-list-item"><a href="contact.php">Contact</a></li>
@@ -93,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
 									<ul class="sub-menu">
 										<li><a href="shop.php">Shop</a></li>
 										<li><a href="checkout.php">Check Out</a></li>
-										<li><a href="single-product.php">Single Product</a></li>
+										<li><a href="404.php">Single Product</a></li>
 										<li><a href="cart.php">Cart</a></li>
 									</ul>
 								</li>
@@ -237,82 +281,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
 
 	<!-- google map section -->
 	<div class="embed-responsive embed-responsive-21by9">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63214.60147039406!2d112.66073957832032!3d-8.124036199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78be1234567890%3A0x1234567890abcdef!2sTuren%2C%20Malang%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1625123456789!5m2!1sid!2sid" 
+		<iframe src="https://www.google.com/maps?q=PT.%20MAKSINDO&hl=id&ll=-7.2963539,112.6077045&z=16&output=embed" 
 		        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="embed-responsive-item"></iframe>
 	</div>
 	<!-- end google map section -->
 
-	<!-- footer -->
-	<div class="footer-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box about-widget">
-						<h2 class="widget-title">About us</h2>
-						<p>Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box get-in-touch">
-						<h2 class="widget-title">Get in Touch</h2>
-						<ul>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/">@turenindah.bangunan</a></li>
-							<li><a href="mailto:info@turenindahbangunan.com">info@turenindahbangunan.com</a></li>
-							<li><a href="https://api.whatsapp.com/send/?phone=6281252462983">+62 812-5246-2983</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box pages">
-						<h2 class="widget-title">Pages</h2>
-						<ul>
-							<li><a href="index.php">Home</a></li>
-							<li><a href="about.php">About</a></li>
-							<li><a href="shop.php">Shop</a></li>
-							<li><a href="news.php">News</a></li>
-							<li><a href="contact.php">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="footer-box subscribe">
-						<h2 class="widget-title">Subscribe</h2>
-						<p>Subscribe to our mailing list to get the latest updates.</p>
-						<form action="index.php" method="POST">
-							<input type="email" name="email" placeholder="Email" required>
-							<button type="submit"><i class="fas fa-paper-plane"></i></button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end footer -->
-	 
-	<!-- copyright -->
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-12">
-					<p>&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br>
-						Distributed By - <a href="#">Thelord</a>
-					</p>
-				</div>
-				<div class="col-lg-6 text-right col-md-12">
-					<div class="social-icons">
-						<ul>
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="https://www.instagram.com/turenindah.bangunan/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end copyright -->
+<?php include 'includes/footer.php'; ?>
 	
 	<!-- jquery -->
 	<script src="assets/js/jquery-1.11.3.min.js"></script>

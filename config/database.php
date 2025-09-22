@@ -12,11 +12,11 @@ define('DB_CHARSET', 'utf8mb4');
 date_default_timezone_set('Asia/Jakarta');
 
 // Base URL
-define('BASE_URL', 'http://localhost/WebProfile/');
+define('BASE_URL', 'http://localhost/WebProfile1/');
 define('ADMIN_URL', BASE_URL . 'admin/');
 
 // Upload paths - using absolute paths
-define('UPLOAD_PATH', $_SERVER['DOCUMENT_ROOT'] . '/WebProfile/assets/img/uploads/');
+define('UPLOAD_PATH', $_SERVER['DOCUMENT_ROOT'] . '/WebProfile1/assets/img/uploads/');
 define('KATEGORI_IMG_PATH', UPLOAD_PATH . 'kategori/');
 define('PRODUK_IMG_PATH', UPLOAD_PATH . 'produk/');
 define('BERITA_IMG_PATH', UPLOAD_PATH . 'berita/');

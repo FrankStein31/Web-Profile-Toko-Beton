@@ -130,6 +130,60 @@ insert  into `produk`(`id`,`id_kategori`,`nama_produk`,`deskripsi`,`deskripsi_ta
 (6,5,'Panel Lantai 120x60','Panel lantai beton precast 120x60cm','Panel lantai berkualitas tinggi untuk konstruksi cepat','panel,lantai,precast',185000.00,30,'pcs','1754921449_6899f9e917710.jpg',NULL,'aktif','2025-08-11 19:01:44','2025-08-11 21:10:49'),
 (7,7,'coba coba coba','coba','coba','kanstin,pembatas,jalan',85000.00,100,'kg','1754963925_689a9fd5d23c0.jpg',NULL,'aktif','2025-08-11 21:32:19','2025-08-12 10:23:52');
 
+/*Table structure for table `footer_content` */
+
+DROP TABLE IF EXISTS `footer_content`;
+
+CREATE TABLE `footer_content` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `section_name` enum('about_us','get_in_touch','pages','subscribe','copyright','social_media') NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text,
+  `links` text,
+  `display_order` int DEFAULT '0',
+  `status` enum('aktif','nonaktif') DEFAULT 'aktif',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `section_name` (`section_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `footer_content` */
+
+insert into `footer_content`(`id`,`section_name`,`title`,`content`,`links`,`display_order`,`status`,`created_at`,`updated_at`) values 
+(1,'about_us','About us','Turen Indah Bangunan adalah toko beton terlengkap di Malang yang menyediakan berbagai produk beton berkualitas tinggi untuk kebutuhan konstruksi Anda.',NULL,1,'aktif','2025-08-12 17:00:00','2025-08-12 17:00:00'),
+(2,'get_in_touch','Get in Touch',NULL,'[{"type":"instagram","text":"@turenindah.bangunan","url":"https://www.instagram.com/turenindah.bangunan/"},{"type":"email","text":"info@turenindahbangunan.com","url":"mailto:info@turenindahbangunan.com"},{"type":"whatsapp","text":"+62 812-5246-2983","url":"https://api.whatsapp.com/send/?phone=6281252462983"}]',2,'aktif','2025-08-12 17:00:00','2025-08-12 17:00:00'),
+(3,'pages','Pages',NULL,'[{"text":"Home","url":"index.php"},{"text":"About","url":"about.php"},{"text":"Shop","url":"shop.php"},{"text":"News","url":"news.php"},{"text":"Contact","url":"contact.php"}]',3,'aktif','2025-08-12 17:00:00','2025-08-12 17:00:00'),
+(4,'subscribe','Subscribe','Subscribe to our mailing list to get the latest updates.',NULL,4,'aktif','2025-08-12 17:00:00','2025-08-12 17:00:00'),
+(5,'copyright','Copyright','&copy; 2025 - Turen Indah Bangunan. <a href="#">Semua hak cipta dilindungi.</a> | Toko Bangunan Terlengkap di Malang.<br> Distributed By - <a href="#">Thelord</a>',NULL,5,'aktif','2025-08-12 17:00:00','2025-08-12 17:00:00'),
+(6,'social_media','Social Media',NULL,'[{"type":"facebook","url":"#"},{"type":"twitter","url":"#"},{"type":"instagram","url":"https://www.instagram.com/turenindah.bangunan/"},{"type":"linkedin","url":"#"},{"type":"dribbble","url":"#"}]',6,'aktif','2025-08-12 17:00:00','2025-08-12 17:00:00');
+
+/*Table structure for table `about_content` */
+
+DROP TABLE IF EXISTS `about_content`;
+
+CREATE TABLE `about_content` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `section_name` varchar(100) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `subtitle` varchar(255) DEFAULT NULL,
+  `content` longtext,
+  `image` varchar(255) DEFAULT NULL,
+  `display_order` int DEFAULT '0',
+  `status` enum('aktif','nonaktif') DEFAULT 'aktif',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `section_name` (`section_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `about_content` */
+
+insert into `about_content`(`section_name`,`title`,`subtitle`,`content`,`display_order`,`status`,`created_at`,`updated_at`) values 
+('company_intro','Tentang Turen Indah Bangunan','Sejak Tahun 1999','<p>Sebagai perusahaan yang bergerak di bidang material bangunan dan beton, kami telah melayani ribuan proyek konstruksi di wilayah Malang dan sekitarnya dengan komitmen tinggi terhadap kualitas dan kepuasan pelanggan.</p><p>Dengan pengalaman puluhan tahun, kami memahami kebutuhan konstruksi modern dan menyediakan solusi material terbaik untuk setiap jenis proyek.</p>',1,'aktif','2025-09-17 17:00:00','2025-09-17 17:00:00'),
+('visi_misi','Visi & Misi Kami','Komitmen Untuk Masa Depan','<h4>Visi</h4><p>Menjadi perusahaan terdepan dalam penyediaan material bangunan dan beton berkualitas tinggi di Indonesia.</p><h4>Misi</h4><ul><li>Menyediakan produk beton dan material bangunan berkualitas tinggi</li><li>Memberikan pelayanan terbaik kepada setiap pelanggan</li><li>Mengembangkan inovasi dalam teknologi konstruksi</li><li>Menjaga komitmen terhadap lingkungan dan keberlanjutan</li></ul>',2,'aktif','2025-09-17 17:00:00','2025-09-17 17:00:00'),
+('why_choose_us','Mengapa Memilih Kami?','Keunggulan Turen Indah Bangunan','<div class="row"><div class="col-md-6 mb-3"><div class="feature-item"><h5><i class="fas fa-certificate text-primary"></i> Kualitas Terjamin</h5><p>Semua produk kami telah teruji dan sesuai dengan standar SNI untuk menjamin kualitas konstruksi Anda.</p></div></div><div class="col-md-6 mb-3"><div class="feature-item"><h5><i class="fas fa-shipping-fast text-primary"></i> Pengiriman Tepat Waktu</h5><p>Sistem logistik yang handal untuk pengiriman sesuai jadwal proyek Anda.</p></div></div><div class="col-md-6 mb-3"><div class="feature-item"><h5><i class="fas fa-users text-primary"></i> Tim Profesional</h5><p>Didukung oleh tim yang berpengalaman dan profesional di bidangnya.</p></div></div><div class="col-md-6 mb-3"><div class="feature-item"><h5><i class="fas fa-headset text-primary"></i> Layanan 24/7</h5><p>Pelayanan konsultasi dan support yang siap membantu kapanpun Anda membutuhkan.</p></div></div></div>',3,'aktif','2025-09-17 17:00:00','2025-09-17 17:00:00');
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

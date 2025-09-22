@@ -225,6 +225,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="about.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : '' ?>">
+                        <i class="fas fa-info-circle"></i>
+                        About Page
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="footer.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'footer.php' ? 'active' : '' ?>">
+                        <i class="fas fa-window-minimize"></i>
+                        Footer
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="<?= BASE_URL ?>" class="nav-link" target="_blank">
                         <i class="fas fa-external-link-alt"></i>
                         Lihat Website

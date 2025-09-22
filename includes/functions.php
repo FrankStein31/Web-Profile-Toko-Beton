@@ -111,6 +111,22 @@ function getFlashMessage() {
     return null;
 }
 
+function displayFlashMessage() {
+    $flash = getFlashMessage();
+    if ($flash) {
+        $alertClass = $flash['type'] === 'success' ? 'alert-success' : 
+                     ($flash['type'] === 'error' ? 'alert-danger' : 'alert-info');
+        $icon = $flash['type'] === 'success' ? 'fa-check-circle' : 
+               ($flash['type'] === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle');
+        
+        echo '<div class="alert ' . $alertClass . ' alert-dismissible fade show" role="alert">';
+        echo '<i class="fas ' . $icon . ' me-2"></i>';
+        echo htmlspecialchars($flash['message']);
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+        echo '</div>';
+    }
+}
+
 function sanitizeInput($input) {
     return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
 }

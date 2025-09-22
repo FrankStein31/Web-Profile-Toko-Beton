@@ -185,7 +185,7 @@ include 'includes/header.php';
                                                                onclick="return confirm('Yakin ingin menghapus berita ini?')">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
-                                                            <a href="<?= BASE_URL ?>single-news.php?slug=<?= $news['slug'] ?>" 
+                                                            <a href="<?= BASE_URL ?>single-product.php?slug=<?= $news['slug'] ?>" 
                                                                class="btn btn-info" title="Lihat" target="_blank">
                                                                 <i class="fas fa-eye"></i>
                                                             </a>
